@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
+import DevelopmentsTable from "./DevelopmentsTable";
 
 export default function App() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  //initial fetch of data
+  // Initial fetch of data
   useEffect(() => {
     fetchData();
   }, []);
 
-  //fetch all devlelopments
+  // Fetch all developments
   const fetchData = async () => {
     try {
       const response = await fetch(
@@ -32,9 +33,13 @@ export default function App() {
     console.log(data);
   }
 
-  return (
-    <>
-      <button onClick={clickHandler}>test</button>
-    </>
-  );
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return <DevelopmentsTable data={data} />;
 }
