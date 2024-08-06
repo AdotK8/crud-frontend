@@ -12,7 +12,7 @@ export default function DevelopmentForm({ onSubmit }) {
     amenities: [], //added
     nearestStation: "", //added
     nearestStationDistance: "", //added
-    images: [],
+    images: [], //added
     zone: "", //added
     parking: false, //added
     availability: {
@@ -31,6 +31,7 @@ export default function DevelopmentForm({ onSubmit }) {
 
   const [newAmenity, setNewAmenity] = useState("");
   const [newFeature, setNewFeature] = useState("");
+  const [newImage, setNewImage] = useState("");
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -128,22 +129,60 @@ export default function DevelopmentForm({ onSubmit }) {
       features: updatedFeatures,
     }));
   };
+
+  const handleAddImage = () => {
+    if (newImage.trim()) {
+      setFormData((prevState) => ({
+        ...prevState,
+        images: [...prevState.images, newImage.trim()],
+      }));
+      setNewImage("");
+    }
+  };
+
+  const handleImageChange = (index, value) => {
+    const updatedImages = [...formData.images];
+    updatedImages[index] = value;
+    setFormData((prevState) => ({
+      ...prevState,
+      images: updatedImages,
+    }));
+  };
+
+  const handleRemoveImage = (index) => {
+    const updatedImages = formData.images.filter((_, i) => i !== index);
+    setFormData((prevState) => ({
+      ...prevState,
+      images: updatedImages,
+    }));
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (formData.features.length === 0 || formData.amenities.length === 0) {
-      setError("At least one feature and one amenity are required.");
+    let errorMessage = "";
+
+    if (formData.features.length === 0) {
+      errorMessage = "At least one feature is required.";
+    } else if (formData.amenities.length === 0) {
+      errorMessage = "At least one amenity is required.";
+    } else if (formData.images.length === 0) {
+      errorMessage = "At least one image is required.";
+    }
+
+    if (errorMessage) {
+      setError(errorMessage);
       return;
     }
 
-    setError(""); // Clear the error if validation passes
+    // If no errors, clear the error and proceed
+    setError("");
     console.log(formData);
     // onSubmit(formData);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* <div>
+      <div>
         <label>
           Name:
           <input
@@ -301,7 +340,7 @@ export default function DevelopmentForm({ onSubmit }) {
             )}
           </div>
         ))}
-      </fieldset> */}
+      </fieldset>
 
       <div>
         <label>
@@ -317,7 +356,7 @@ export default function DevelopmentForm({ onSubmit }) {
 
       {formData.landingPage && (
         <>
-          {/* <div>
+          <div>
             <label>
               Copy 1:
               <input
@@ -371,9 +410,10 @@ export default function DevelopmentForm({ onSubmit }) {
                 required
               />
             </label>
-          </div> */}
+          </div>
 
           {error && <div style={{ color: "red" }}>{error}</div>}
+
           <div>
             <label>
               New Amenity:
@@ -398,6 +438,20 @@ export default function DevelopmentForm({ onSubmit }) {
               />
               <button type="button" onClick={handleAddFeature}>
                 Add Feature
+              </button>
+            </label>
+          </div>
+
+          <div>
+            <label>
+              New Image:
+              <input
+                type="text"
+                value={newImage}
+                onChange={(e) => setNewImage(e.target.value)}
+              />
+              <button type="button" onClick={handleAddImage}>
+                Add Image
               </button>
             </label>
           </div>
@@ -436,6 +490,27 @@ export default function DevelopmentForm({ onSubmit }) {
                   <button
                     type="button"
                     onClick={() => handleRemoveFeature(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {formData.images.length > 0 && (
+            <div>
+              <h3>Images</h3>
+              {formData.images.map((image, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    value={image}
+                    onChange={(e) => handleImageChange(index, e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(index)}
                   >
                     Remove
                   </button>
