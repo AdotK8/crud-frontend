@@ -1,0 +1,452 @@
+import React, { useState } from "react";
+
+const POSTCODE_REGEX = /^([A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2})$/i;
+
+export default function DevelopmentForm({ onSubmit }) {
+  const [formData, setFormData] = useState({
+    name: "", //added
+    landingPage: false, //added
+    copy1: "", //added
+    copy2: "", //added
+    features: [],
+    amenities: [], //added
+    nearestStation: "", //added
+    nearestStationDistance: "", //added
+    images: [],
+    zone: "", //added
+    parking: false, //added
+    availability: {
+      oneBed: { available: false, priceFrom: "" }, //added
+      twoBed: { available: false, priceFrom: "" }, //added
+      threeBed: { available: false, priceFrom: "" }, //added
+      fourPlusBed: { available: false, priceFrom: "" }, //added
+    },
+    postcode: "", //added
+    developer: "", //added
+    cardinalLocation: "", //added
+    fee: "", //added
+    contactEmail: "", //added
+    completion: "", //added
+  });
+
+  const [newAmenity, setNewAmenity] = useState("");
+  const [newFeature, setNewFeature] = useState("");
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    if (name === "postcode") {
+      const input = e.target;
+      if (!POSTCODE_REGEX.test(value)) {
+        input.setCustomValidity("Please enter a valid UK postcode");
+      } else {
+        input.setCustomValidity("");
+      }
+      input.reportValidity();
+    }
+
+    if (type === "checkbox") {
+      setFormData({
+        ...formData,
+        [name]: checked,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
+  const handleAvailabilityChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const [bedType, field] = name.split(".");
+
+    setFormData((prevState) => ({
+      ...prevState,
+      availability: {
+        ...prevState.availability,
+        [bedType]: {
+          ...prevState.availability[bedType],
+          [field]: type === "checkbox" ? checked : value,
+        },
+      },
+    }));
+  };
+
+  const handleAddAmenity = () => {
+    if (newAmenity.trim()) {
+      setFormData((prevState) => ({
+        ...prevState,
+        amenities: [...prevState.amenities, newAmenity.trim()],
+      }));
+      setNewAmenity("");
+    }
+  };
+
+  const handleAmenityChange = (index, value) => {
+    const updatedAmenities = [...formData.amenities];
+    updatedAmenities[index] = value;
+    setFormData((prevState) => ({
+      ...prevState,
+      amenities: updatedAmenities,
+    }));
+  };
+
+  const handleRemoveAmenity = (index) => {
+    const updatedAmenities = formData.amenities.filter((_, i) => i !== index);
+    setFormData((prevState) => ({
+      ...prevState,
+      amenities: updatedAmenities,
+    }));
+  };
+
+  const handleAddFeature = () => {
+    if (newFeature.trim()) {
+      setFormData((prevState) => ({
+        ...prevState,
+        features: [...prevState.features, newFeature.trim()],
+      }));
+      setNewFeature("");
+    }
+  };
+
+  const handleFeatureChange = (index, value) => {
+    const updatedFeatures = [...formData.features];
+    updatedFeatures[index] = value;
+    setFormData((prevState) => ({
+      ...prevState,
+      features: updatedFeatures,
+    }));
+  };
+
+  const handleRemoveFeature = (index) => {
+    const updatedFeatures = formData.features.filter((_, i) => i !== index);
+    setFormData((prevState) => ({
+      ...prevState,
+      features: updatedFeatures,
+    }));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (formData.features.length === 0 || formData.amenities.length === 0) {
+      setError("At least one feature and one amenity are required.");
+      return;
+    }
+
+    setError(""); // Clear the error if validation passes
+    console.log(formData);
+    // onSubmit(formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* <div>
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Developer:
+          <input
+            type="text"
+            name="developer"
+            value={formData.developer}
+            onChange={handleChange}
+            required
+          />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Postcode:
+          <input
+            type="text"
+            name="postcode"
+            value={formData.postcode}
+            onChange={handleChange}
+            required
+          />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Zone:
+          <input
+            type="number"
+            name="zone"
+            value={formData.zone}
+            onChange={handleChange}
+            required
+            min="1"
+            max="8"
+          />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Cardinal Location:
+          <select
+            name="cardinalLocation"
+            value={formData.cardinalLocation}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select a location</option>
+            <option value="north">North</option>
+            <option value="east">East</option>
+            <option value="west">West</option>
+            <option value="central">Central</option>
+            <option value="south">South</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>
+          Parking:
+          <input
+            type="checkbox"
+            name="parking"
+            checked={formData.parking}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Fee:
+          <input
+            type="number"
+            name="fee"
+            value={formData.fee}
+            onChange={handleChange}
+            required
+            min="0.5"
+            max="5"
+            step="0.5"
+          />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Contact Email:
+          <input
+            type="email"
+            name="contactEmail"
+            value={formData.contactEmail}
+            onChange={handleChange}
+            required
+          />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Completion:
+          <select
+            name="completion"
+            value={formData.completion}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Completion Date</option>
+            <option value="completed">Completed</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+          </select>
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>Availability</legend>
+        {["oneBed", "twoBed", "threeBed", "fourPlusBed"].map((bedType) => (
+          <div key={bedType}>
+            <label>
+              {bedType} Available:
+              <input
+                type="checkbox"
+                name={`${bedType}.available`}
+                checked={formData.availability[bedType].available}
+                onChange={handleAvailabilityChange}
+              />
+            </label>
+            {formData.availability[bedType].available && (
+              <label>
+                {bedType} Price From:
+                <input
+                  type="number"
+                  name={`${bedType}.priceFrom`}
+                  value={formData.availability[bedType].priceFrom}
+                  onChange={handleAvailabilityChange}
+                  min="0"
+                  required
+                />
+              </label>
+            )}
+          </div>
+        ))}
+      </fieldset> */}
+
+      <div>
+        <label>
+          Add to landing pages?
+          <input
+            type="checkbox"
+            name="landingPage"
+            checked={formData.landingPage}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+
+      {formData.landingPage && (
+        <>
+          {/* <div>
+            <label>
+              Copy 1:
+              <input
+                type="text"
+                name="copy1"
+                value={formData.copy1}
+                onChange={handleChange}
+                maxLength="350"
+                minLength="100"
+                required
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              Copy 2:
+              <input
+                type="text"
+                name="copy2"
+                value={formData.copy2}
+                onChange={handleChange}
+                maxLength="350"
+                minLength="100"
+                required
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              Nearest Station:
+              <input
+                type="text"
+                name="nearestStation"
+                value={formData.nearestStation}
+                onChange={handleChange}
+                required
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Nearest Station Distance (minutes):
+              <input
+                type="number"
+                name="nearestStationDistance"
+                value={formData.nearestStationDistance}
+                onChange={handleChange}
+                min="1"
+                required
+              />
+            </label>
+          </div> */}
+
+          {error && <div style={{ color: "red" }}>{error}</div>}
+          <div>
+            <label>
+              New Amenity:
+              <input
+                type="text"
+                value={newAmenity}
+                onChange={(e) => setNewAmenity(e.target.value)}
+              />
+              <button type="button" onClick={handleAddAmenity}>
+                Add Amenity
+              </button>
+            </label>
+          </div>
+
+          <div>
+            <label>
+              New Feature:
+              <input
+                type="text"
+                value={newFeature}
+                onChange={(e) => setNewFeature(e.target.value)}
+              />
+              <button type="button" onClick={handleAddFeature}>
+                Add Feature
+              </button>
+            </label>
+          </div>
+
+          {formData.amenities.length > 0 && (
+            <div>
+              <h3>Amenities</h3>
+              {formData.amenities.map((amenity, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    value={amenity}
+                    onChange={(e) => handleAmenityChange(index, e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveAmenity(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {formData.features.length > 0 && (
+            <div>
+              <h3>Features</h3>
+              {formData.features.map((feature, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    value={feature}
+                    onChange={(e) => handleFeatureChange(index, e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveFeature(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}

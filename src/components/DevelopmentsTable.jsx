@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./styles/table.module.scss";
+import styles from "../styles/table.module.scss";
 import AddDevelopment from "./AddDevelopment";
 
 export default function DevelopmentsTable({ data }) {
@@ -16,6 +16,12 @@ export default function DevelopmentsTable({ data }) {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleFormSubmit = (formData) => {
+    console.log("Added Development:", formData);
+    // Here you would typically make an API call to submit the form data
+    // For now, we just log it to the console
   };
 
   return (
@@ -107,7 +113,7 @@ export default function DevelopmentsTable({ data }) {
             <span className={styles["close"]} onClick={handleCloseModal}>
               &times;
             </span>
-            <AddDevelopment />
+            <AddDevelopment onSubmit={handleFormSubmit} />
           </div>
         </div>
       )}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DevelopmentsTable from "./DevelopmentsTable";
+import { fetchAllDevelopments } from "../utils/api";
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -12,15 +13,10 @@ export default function App() {
   }, []);
 
   // Fetch all developments
+
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/developments/get"
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const result = await response.json();
+      const result = await fetchAllDevelopments();
       setData(result);
     } catch (error) {
       setError(error);
@@ -28,10 +24,6 @@ export default function App() {
       setLoading(false);
     }
   };
-
-  function clickHandler() {
-    console.log(data);
-  }
 
   if (loading) {
     return <div>Loading...</div>;
