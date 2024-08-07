@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "../styles/table.module.scss";
 import AddDevelopment from "./AddDevelopment";
+import { createDevelopment } from "../utils/api";
 
 export default function DevelopmentsTable({ data }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,10 +19,15 @@ export default function DevelopmentsTable({ data }) {
     setIsModalOpen(false);
   };
 
-  const handleFormSubmit = (formData) => {
-    console.log("Added Development:", formData);
-    // Here you would typically make an API call to submit the form data
-    // For now, we just log it to the console
+  const handleFormSubmit = async (formData) => {
+    console.log(formData);
+    try {
+      const result = await createDevelopment(formData); // Call the API function
+      console.log(result); // Handle success (e.g., show success message, reset form, etc.)
+      onSubmit(result);
+    } catch (error) {
+      console.error("Error creating development:", error); // Handle error (e.g., show error message)
+    }
   };
 
   return (

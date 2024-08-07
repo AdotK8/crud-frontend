@@ -158,15 +158,16 @@ export default function DevelopmentForm({ onSubmit }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
     let errorMessage = "";
 
-    if (formData.features.length === 0) {
-      errorMessage = "At least one feature is required.";
-    } else if (formData.amenities.length === 0) {
-      errorMessage = "At least one amenity is required.";
-    } else if (formData.images.length === 0) {
-      errorMessage = "At least one image is required.";
+    if (formData.landingPage) {
+      if (formData.features.length === 0) {
+        errorMessage = "At least one feature is required.";
+      } else if (formData.amenities.length === 0) {
+        errorMessage = "At least one amenity is required.";
+      } else if (formData.images.length === 0) {
+        errorMessage = "At least one image is required.";
+      }
     }
 
     if (errorMessage) {
@@ -174,10 +175,8 @@ export default function DevelopmentForm({ onSubmit }) {
       return;
     }
 
-    // If no errors, clear the error and proceed
     setError("");
-    console.log(formData);
-    // onSubmit(formData);
+    onSubmit(formData); // Ensure onSubmit is called with formData
   };
 
   return (
@@ -354,6 +353,8 @@ export default function DevelopmentForm({ onSubmit }) {
         </label>
       </div>
 
+      {error && <div style={{ color: "red" }}>{error}</div>}
+
       {formData.landingPage && (
         <>
           <div>
@@ -412,7 +413,19 @@ export default function DevelopmentForm({ onSubmit }) {
             </label>
           </div>
 
-          {error && <div style={{ color: "red" }}>{error}</div>}
+          <div>
+            <label>
+              New Feature:
+              <input
+                type="text"
+                value={newFeature}
+                onChange={(e) => setNewFeature(e.target.value)}
+              />
+              <button type="button" onClick={handleAddFeature}>
+                Add Feature
+              </button>
+            </label>
+          </div>
 
           <div>
             <label>
@@ -424,20 +437,6 @@ export default function DevelopmentForm({ onSubmit }) {
               />
               <button type="button" onClick={handleAddAmenity}>
                 Add Amenity
-              </button>
-            </label>
-          </div>
-
-          <div>
-            <label>
-              New Feature:
-              <input
-                type="text"
-                value={newFeature}
-                onChange={(e) => setNewFeature(e.target.value)}
-              />
-              <button type="button" onClick={handleAddFeature}>
-                Add Feature
               </button>
             </label>
           </div>

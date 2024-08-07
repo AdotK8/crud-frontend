@@ -26,6 +26,22 @@ export const fetchOneDevelopment = async (id) => {
   }
 };
 
-export const createDevelopment = async ([development]) => {
-  console.log(development);
+export const createDevelopment = async (development) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(development), // Convert object to JSON string
+    });
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
