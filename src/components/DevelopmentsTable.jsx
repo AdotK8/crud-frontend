@@ -23,8 +23,8 @@ export default function DevelopmentsTable({ data }) {
     console.log(formData);
     try {
       const result = await createDevelopment(formData); // Call the API function
-      console.log(result); // Handle success (e.g., show success message, reset form, etc.)
-      onSubmit(result);
+      console.log(result);
+      // onSubmit(result);
     } catch (error) {
       console.error("Error creating development:", error); // Handle error (e.g., show error message)
     }

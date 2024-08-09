@@ -4,29 +4,29 @@ const POSTCODE_REGEX = /^([A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2})$/i;
 
 export default function DevelopmentForm({ onSubmit }) {
   const [formData, setFormData] = useState({
-    name: "", //added
-    landingPage: false, //added
-    copy1: "", //added
-    copy2: "", //added
+    name: "",
+    landingPage: false,
+    copy1: "",
+    copy2: "",
     features: [],
-    amenities: [], //added
-    nearestStation: "", //added
-    nearestStationDistance: "", //added
-    images: [], //added
-    zone: "", //added
-    parking: false, //added
+    amenities: [],
+    nearestStation: "",
+    nearestStationDistance: "",
+    images: [],
+    zone: "",
+    parking: false,
     availability: {
-      oneBed: { available: false, priceFrom: "" }, //added
-      twoBed: { available: false, priceFrom: "" }, //added
-      threeBed: { available: false, priceFrom: "" }, //added
-      fourPlusBed: { available: false, priceFrom: "" }, //added
+      oneBed: { available: false, priceFrom: 0 },
+      twoBed: { available: false, priceFrom: 0 },
+      threeBed: { available: false, priceFrom: 0 },
+      fourPlusBed: { available: false, priceFrom: 0 },
     },
-    postcode: "", //added
-    developer: "", //added
-    cardinalLocation: "", //added
-    fee: "", //added
-    contactEmail: "", //added
-    completion: "", //added
+    postcode: "",
+    developer: "",
+    cardinalLocation: "",
+    fee: "",
+    contactEmail: "",
+    completion: "",
   });
 
   const [newAmenity, setNewAmenity] = useState("");
@@ -176,7 +176,7 @@ export default function DevelopmentForm({ onSubmit }) {
     }
 
     setError("");
-    onSubmit(formData); // Ensure onSubmit is called with formData
+    onSubmit(formData);
   };
 
   return (
@@ -366,7 +366,6 @@ export default function DevelopmentForm({ onSubmit }) {
                 value={formData.copy1}
                 onChange={handleChange}
                 maxLength="350"
-                minLength="100"
                 required
               />
             </label>
@@ -381,7 +380,6 @@ export default function DevelopmentForm({ onSubmit }) {
                 value={formData.copy2}
                 onChange={handleChange}
                 maxLength="350"
-                minLength="100"
                 required
               />
             </label>
