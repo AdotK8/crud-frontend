@@ -33,5 +33,7 @@ export default function App() {
     return <div>Error: {error.message}</div>;
   }
 
-  return <DevelopmentsTable data={data} />;
+  return (
+    <DevelopmentsTable data={data} setData={setData} setLoading={setLoading} />
+  );
 }

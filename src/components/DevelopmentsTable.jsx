@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import styles from "../styles/table.module.scss";
 import AddDevelopment from "./AddDevelopment";
 import { createDevelopment } from "../utils/api";
+import { fetchAllDevelopments } from "../utils/api";
 
-export default function DevelopmentsTable({ data }) {
+export default function DevelopmentsTable({ data, setData, setLoading }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // Function to format numbers with commas
   const formatNumber = (number) => {
     return new Intl.NumberFormat().format(number);
   };
@@ -17,6 +18,18 @@ export default function DevelopmentsTable({ data }) {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setErrorMessage("");
+  };
+
+  const refreshData = async () => {
+    try {
+      const result = await fetchAllDevelopments();
+      setData(result);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleFormSubmit = async (formData) => {
@@ -24,9 +37,12 @@ export default function DevelopmentsTable({ data }) {
     try {
       const result = await createDevelopment(formData); // Call the API function
       console.log(result);
-      // onSubmit(result);
+      refreshData();
+      setIsModalOpen(false);
+      setErrorMessage("");
     } catch (error) {
-      console.error("Error creating development:", error); // Handle error (e.g., show error message)
+      console.error("Error creating development:", error);
+      setErrorMessage("Error creating development: " + error.message); // Set the error message
     }
   };
 
@@ -120,6 +136,11 @@ export default function DevelopmentsTable({ data }) {
               &times;
             </span>
             <AddDevelopment onSubmit={handleFormSubmit} />
+            {errorMessage && (
+              <div className={styles["error-message"]} style={{ color: "red" }}>
+                Error creating development
+              </div>
+            )}
           </div>
         </div>
       )}
