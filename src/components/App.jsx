@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import DevelopmentsTable from "./DevelopmentsTable";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { fetchAllDevelopments } from "../utils/api";
+import DevelopmentDetail from "./DevelopmentDetail";
 
 export default function App() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Initial fetch of data
   useEffect(() => {
     fetchData();
   }, []);
-
-  // Fetch all developments
 
   const fetchData = async () => {
     try {
@@ -34,6 +33,20 @@ export default function App() {
   }
 
   return (
-    <DevelopmentsTable data={data} setData={setData} setLoading={setLoading} />
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <DevelopmentsTable
+              data={data}
+              setData={setData}
+              setLoading={setLoading}
+            />
+          }
+        />
+        <Route path="/development/:id" element={<DevelopmentDetail />} />
+      </Routes>
+    </Router>
   );
 }

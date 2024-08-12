@@ -3,10 +3,12 @@ import styles from "../styles/table.module.scss";
 import AddDevelopment from "./AddDevelopment";
 import { createDevelopment } from "../utils/api";
 import { fetchAllDevelopments } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 export default function DevelopmentsTable({ data, setData, setLoading }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const formatNumber = (number) => {
     return new Intl.NumberFormat().format(number);
@@ -32,17 +34,21 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
     }
   };
 
+  const developmentViewClickHandler = (id) => {
+    navigate(`/development/${id}`);
+  };
+
   const handleFormSubmit = async (formData) => {
     console.log(formData);
     try {
-      const result = await createDevelopment(formData); // Call the API function
+      const result = await createDevelopment(formData);
       console.log(result);
       refreshData();
       setIsModalOpen(false);
       setErrorMessage("");
     } catch (error) {
       console.error("Error creating development:", error);
-      setErrorMessage("Error creating development: " + error.message); // Set the error message
+      setErrorMessage("Error creating development: " + error.message);
     }
   };
 
@@ -73,7 +79,10 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
         </thead>
         <tbody>
           {data.map((development) => (
-            <tr key={development._id}>
+            <tr
+              key={development._id}
+              onClick={() => developmentViewClickHandler(development._id)}
+            >
               <td>{development.name}</td>
               <td>{development.zone}</td>
               <td>{development.parking ? "Yes" : "No"}</td>
