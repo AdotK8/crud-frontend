@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "../styles/table.module.scss";
-import AddDevelopment from "./AddDevelopment";
+import DevelopmentForm from "./Form";
 import { createDevelopment } from "../utils/api";
 import { fetchAllDevelopments } from "../utils/api";
 import { useNavigate } from "react-router-dom";
@@ -144,7 +144,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
             <span className={styles["close"]} onClick={handleCloseModal}>
               &times;
             </span>
-            <AddDevelopment onSubmit={handleFormSubmit} />
+            <DevelopmentForm onSubmit={handleFormSubmit} />
             {errorMessage && (
               <div className={styles["error-message"]} style={{ color: "red" }}>
                 Error creating development

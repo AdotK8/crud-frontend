@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import DevelopmentsTable from "./DevelopmentsTable";
+import DevelopmentsTable from "./Table";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { fetchAllDevelopments } from "../utils/api";
-import DevelopmentDetail from "./DevelopmentDetail";
+import DevelopmentDetail from "./Details";
 
 export default function App() {
   const [data, setData] = useState([]);

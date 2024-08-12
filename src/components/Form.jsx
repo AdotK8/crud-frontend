@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { fetchOneDevelopment } from "../utils/api";
 
 const POSTCODE_REGEX = /^([A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2})$/i;
 
@@ -33,6 +34,21 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
   const [newFeature, setNewFeature] = useState("");
   const [newImage, setNewImage] = useState("");
   const [error, setError] = useState("");
+
+  if (id !== null) {
+    const getDevelopment = async () => {
+      try {
+        const result = await fetchOneDevelopment(id);
+        setFormData(result);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    useEffect(() => {
+      getDevelopment();
+    }, []);
+  }
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

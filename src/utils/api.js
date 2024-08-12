@@ -33,7 +33,28 @@ export const createDevelopment = async (development) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(development), // Convert object to JSON string
+      body: JSON.stringify(development),
+    });
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const editDevelopment = async (development) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/mod`, {
+      // Ensure the URL is correct
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(development),
     });
     if (!response.ok) {
       const errorText = await response.text();
