@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchOneDevelopment } from "../utils/api";
 import DevelopmentForm from "./Form";
 import styles from "../styles/details.module.scss";
-import { editDevelopment } from "../utils/api";
+import {
+  editDevelopment,
+  fetchOneDevelopment,
+  deleteDevelopment,
+} from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 export default function DevelopmentDetail() {
   const { id } = useParams();
@@ -11,7 +15,9 @@ export default function DevelopmentDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getDevelopment = async () => {
@@ -35,6 +41,26 @@ export default function DevelopmentDetail() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setErrorMessage("");
+  };
+
+  const handleDeleteClick = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      const result = await deleteDevelopment(id);
+      setIsModalOpen(false);
+      setErrorMessage("");
+      navigate(`/`);
+    } catch (error) {
+      console.error("Error deleting development:", error);
+      setErrorMessage("Error deleting development: " + error.message);
+    }
   };
 
   const refreshData = async () => {
@@ -159,6 +185,22 @@ export default function DevelopmentDetail() {
                   Error creating development
                 </div>
               )}
+            </div>
+          </div>
+        )}
+        <button onClick={handleDeleteClick}>Delete Development</button>
+        {isDeleteModalOpen && (
+          <div className={styles["modal"]}>
+            <div className={styles["modal-content"]}>
+              <span
+                className={styles["close"]}
+                onClick={handleCloseDeleteModal}
+              >
+                &times;
+              </span>
+              <div>Are you sure you want to delete?</div>
+              <button onClick={handleConfirmDelete}>YES</button>
+              <button onClick={handleCloseDeleteModal}>NO</button>
             </div>
           </div>
         )}

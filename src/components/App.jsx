@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from "react";
 import DevelopmentsTable from "./Table";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import { fetchAllDevelopments } from "../utils/api";
 import DevelopmentDetail from "./Details";
+import Navbar from "./Navbar";
 
-export default function App() {
+function AppContent() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const location = useLocation();
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [location.pathname]);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const result = await fetchAllDevelopments();
       setData(result);
@@ -33,7 +42,8 @@ export default function App() {
   }
 
   return (
-    <Router>
+    <>
+      <Navbar />
       <Routes>
         <Route
           path="/"
@@ -47,6 +57,14 @@ export default function App() {
         />
         <Route path="/development/:id" element={<DevelopmentDetail />} />
       </Routes>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }

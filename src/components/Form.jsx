@@ -172,9 +172,24 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
       images: updatedImages,
     }));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let errorMessage = "";
+
+    const updatedAvailability = { ...formData.availability };
+    if (!formData.availability.oneBed.available) {
+      updatedAvailability.oneBed.priceFrom = 0;
+    }
+    if (!formData.availability.twoBed.available) {
+      updatedAvailability.twoBed.priceFrom = 0;
+    }
+    if (!formData.availability.threeBed.available) {
+      updatedAvailability.threeBed.priceFrom = 0;
+    }
+    if (!formData.availability.fourPlusBed.available) {
+      updatedAvailability.fourPlusBed.priceFrom = 0;
+    }
 
     if (formData.landingPage) {
       if (formData.features.length === 0) {
@@ -192,7 +207,8 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
     }
 
     setError("");
-    onSubmit(formData);
+
+    onSubmit({ ...formData, availability: updatedAvailability });
   };
 
   return (

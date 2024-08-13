@@ -49,7 +49,6 @@ export const createDevelopment = async (development) => {
 export const editDevelopment = async (development) => {
   try {
     const response = await fetch(`${API_BASE_URL}/mod`, {
-      // Ensure the URL is correct
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,6 +60,28 @@ export const editDevelopment = async (development) => {
       throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
     }
     const result = await response.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteDevelopment = async (id) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+    }
+
+    const result = await response.json();
+    console.log(result);
     return result;
   } catch (error) {
     throw error;
