@@ -15,6 +15,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
     twoBed: "All",
     threeBed: "All",
     fourBed: "All",
+    completion: "All",
   });
 
   const navigate = useNavigate();
@@ -47,6 +48,8 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
             development.zone === parseInt(filters.zone)) &&
           (filters.cardinal === "All" ||
             development.cardinalLocation === filters.cardinal) &&
+          (filters.completion === "All" ||
+            development.completion === filters.completion) &&
           (filters.oneBed === "All" ||
             development.availability.oneBed.available ===
               (filters.oneBed === "Yes")) &&
@@ -101,6 +104,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
         <thead>
           <tr>
             <th>Name</th>
+            {/* Zone Filter */}
             <th>
               Zone
               <div className={styles["filters"]}>
@@ -119,6 +123,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 </select>
               </div>
             </th>
+            {/* Parking Filter */}
             <th>
               Parking
               <div className={styles["filters"]}>
@@ -134,6 +139,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 </select>
               </div>
             </th>
+            {/* 1 bed Filter */}
             <th>
               1 Bed Availability
               <div className={styles["filters"]}>
@@ -150,6 +156,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
               </div>
             </th>
             <th>1 Bed Price From</th>
+            {/* 2 bed Filter */}
             <th>
               2 Bed Availability
               <div className={styles["filters"]}>
@@ -166,6 +173,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
               </div>
             </th>
             <th>2 Bed Price From</th>
+            {/* 3 bed Filter */}
             <th>
               3 Bed Availability
               <div className={styles["filters"]}>
@@ -182,6 +190,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
               </div>
             </th>
             <th>3 Bed Price From</th>
+            {/* 4 bed Filter */}
             <th>
               4+ Bed Availability
               <div className={styles["filters"]}>
@@ -200,6 +209,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
             <th>4+ Bed Price From</th>
             <th>Postcode</th>
             <th>Developer</th>
+            {/* Cardinal Filter */}
             <th>
               Cardinal Location
               <div className={styles["filters"]}>
@@ -215,6 +225,23 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                   <option value="east">East</option>
                   <option value="west">West</option>
                   <option value="south">South</option>
+                </select>
+              </div>
+            </th>
+            <th>
+              Completion
+              <div className={styles["filters"]}>
+                <select
+                  id="completion-filter"
+                  name="completion"
+                  value={filters.completion}
+                  onChange={handleFilterChange}
+                >
+                  <option value="All">All</option>
+                  <option value="completed">Completed</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
                 </select>
               </div>
             </th>
@@ -273,6 +300,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
               <td>{development.postcode}</td>
               <td>{development.developer}</td>
               <td>{development.cardinalLocation}</td>
+              <td>{development.completion}</td>
               <td>{development.fee + "%"}</td>
               <td>{development.contactEmail}</td>
               <td>{new Date(development.updatedAt).toLocaleDateString()}</td>

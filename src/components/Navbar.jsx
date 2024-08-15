@@ -8,6 +8,9 @@ export default function Navbar() {
         <li>
           <Link to="/">Database</Link>
         </li>
+        <li>
+          <Link to="/matching">Matching</Link>
+        </li>
       </ul>
     </nav>
   );
