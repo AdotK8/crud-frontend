@@ -75,13 +75,6 @@ export default function Matching({ data, setData }) {
       return;
     }
 
-    if (price >= 100000 && filters.beds === "All") {
-      setError(
-        "Please select the number of bedrooms when entering a price above 100,000."
-      );
-      return;
-    }
-
     runFilter();
   };
 

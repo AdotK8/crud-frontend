@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchOneDevelopment } from "../utils/api";
+import styles from "../styles/details.module.scss";
 
 const POSTCODE_REGEX = /^([A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2})$/i;
 
@@ -14,6 +15,8 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
     nearestStation: "",
     nearestStationDistance: "",
     images: [],
+    brochures: [],
+    priceLists: [],
     zone: "",
     parking: false,
     availability: {
@@ -33,6 +36,8 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
   const [newAmenity, setNewAmenity] = useState("");
   const [newFeature, setNewFeature] = useState("");
   const [newImage, setNewImage] = useState("");
+  const [newBrochure, setNewBrochure] = useState("");
+  const [newPriceList, setNewPriceList] = useState("");
   const [error, setError] = useState("");
 
   if (id !== null) {
@@ -173,6 +178,60 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
     }));
   };
 
+  const handleAddBrochure = () => {
+    if (newBrochure.trim()) {
+      setFormData((prevState) => ({
+        ...prevState,
+        brochures: [...prevState.brochures, newBrochure.trim()],
+      }));
+      setNewBrochure("");
+    }
+  };
+
+  const handleBrochureChange = (index, value) => {
+    const updatedBrochures = [...formData.brochures];
+    updatedBrochures[index] = value;
+    setFormData((prevState) => ({
+      ...prevState,
+      brochures: updatedBrochures,
+    }));
+  };
+
+  const handleRemoveBrochure = (index) => {
+    const updatedBrochures = formData.brochures.filter((_, i) => i !== index);
+    setFormData((prevState) => ({
+      ...prevState,
+      brochures: updatedBrochures,
+    }));
+  };
+
+  const handleAddPriceList = () => {
+    if (newPriceList.trim()) {
+      setFormData((prevState) => ({
+        ...prevState,
+        priceLists: [...prevState.priceLists, newPriceList.trim()],
+      }));
+      setNewPriceList("");
+    }
+  };
+
+  const handlePriceListChange = (index, value) => {
+    const updatedPriceLists = [...formData.priceLists];
+    updatedPriceLists[index] = value;
+    setFormData((prevState) => ({
+      ...prevState,
+      priceLists: updatedPriceLists,
+    }));
+  };
+
+  const handleRemovePriceList = (index) => {
+    const updatedPriceLists = formData.priceLists.filter((_, i) => i !== index);
+    setFormData((prevState) => ({
+      ...prevState,
+      priceLists: updatedPriceLists,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let errorMessage = "";
@@ -201,6 +260,10 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
       }
     }
 
+    if (formData.brochures.length === 0) {
+      errorMessage = "At least one brochure is required.";
+    }
+
     if (errorMessage) {
       setError(errorMessage);
       return;
@@ -212,218 +275,16 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Developer:
-          <input
-            type="text"
-            name="developer"
-            value={formData.developer}
-            onChange={handleChange}
-            required
-          />
-        </label>
-      </div>
-
-      <div>
-        <label>
-          Postcode:
-          <input
-            type="text"
-            name="postcode"
-            value={formData.postcode}
-            onChange={handleChange}
-            required
-          />
-        </label>
-      </div>
-
-      <div>
-        <label>
-          Zone:
-          <input
-            type="number"
-            name="zone"
-            value={formData.zone}
-            onChange={handleChange}
-            required
-            min="1"
-            max="8"
-          />
-        </label>
-      </div>
-
-      <div>
-        <label>
-          Cardinal Location:
-          <select
-            name="cardinalLocation"
-            value={formData.cardinalLocation}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select a location</option>
-            <option value="north">North</option>
-            <option value="east">East</option>
-            <option value="west">West</option>
-            <option value="central">Central</option>
-            <option value="south">South</option>
-          </select>
-        </label>
-      </div>
-      <div>
-        <label>
-          Parking:
-          <input
-            type="checkbox"
-            name="parking"
-            checked={formData.parking}
-            onChange={handleChange}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label>
-          Fee:
-          <input
-            type="number"
-            name="fee"
-            value={formData.fee}
-            onChange={handleChange}
-            required
-            min="0.5"
-            max="5"
-            step="0.5"
-          />
-        </label>
-      </div>
-
-      <div>
-        <label>
-          Contact Email:
-          <input
-            type="email"
-            name="contactEmail"
-            value={formData.contactEmail}
-            onChange={handleChange}
-            required
-          />
-        </label>
-      </div>
-
-      <div>
-        <label>
-          Completion:
-          <select
-            name="completion"
-            value={formData.completion}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Completion Date</option>
-            <option value="completed">Completed</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-            <option value="2027">2027</option>
-          </select>
-        </label>
-      </div>
-
-      <fieldset>
-        <legend>Availability</legend>
-        {["oneBed", "twoBed", "threeBed", "fourPlusBed"].map((bedType) => (
-          <div key={bedType}>
-            <label>
-              {bedType} Available:
-              <input
-                type="checkbox"
-                name={`${bedType}.available`}
-                checked={formData.availability[bedType].available}
-                onChange={handleAvailabilityChange}
-              />
-            </label>
-            {formData.availability[bedType].available && (
-              <label>
-                {bedType} Price From:
-                <input
-                  type="number"
-                  name={`${bedType}.priceFrom`}
-                  value={formData.availability[bedType].priceFrom}
-                  onChange={handleAvailabilityChange}
-                  min="0"
-                  required
-                />
-              </label>
-            )}
-          </div>
-        ))}
-      </fieldset>
-
-      <div>
-        <label>
-          Add to landing pages?
-          <input
-            type="checkbox"
-            name="landingPage"
-            checked={formData.landingPage}
-            onChange={handleChange}
-          />
-        </label>
-      </div>
-
-      {error && <div style={{ color: "red" }}>{error}</div>}
-
-      {formData.landingPage && (
-        <>
+    <div className={styles.modal}>
+      <div className={styles["modal-content"]}>
+        <form onSubmit={handleSubmit}>
           <div>
             <label>
-              Copy 1:
+              Name:
               <input
                 type="text"
-                name="copy1"
-                value={formData.copy1}
-                onChange={handleChange}
-                maxLength="350"
-                required
-              />
-            </label>
-          </div>
-
-          <div>
-            <label>
-              Copy 2:
-              <input
-                type="text"
-                name="copy2"
-                value={formData.copy2}
-                onChange={handleChange}
-                maxLength="350"
-                required
-              />
-            </label>
-          </div>
-
-          <div>
-            <label>
-              Nearest Station:
-              <input
-                type="text"
-                name="nearestStation"
-                value={formData.nearestStation}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 required
               />
@@ -431,13 +292,99 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
           </div>
           <div>
             <label>
-              Nearest Station Distance (minutes):
+              Developer:
+              <input
+                type="text"
+                name="developer"
+                value={formData.developer}
+                onChange={handleChange}
+                required
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              Postcode:
+              <input
+                type="text"
+                name="postcode"
+                value={formData.postcode}
+                onChange={handleChange}
+                required
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              Zone:
               <input
                 type="number"
-                name="nearestStationDistance"
-                value={formData.nearestStationDistance}
+                name="zone"
+                value={formData.zone}
                 onChange={handleChange}
+                required
                 min="1"
+                max="8"
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              Cardinal Location:
+              <select
+                name="cardinalLocation"
+                value={formData.cardinalLocation}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select a location</option>
+                <option value="north">North</option>
+                <option value="east">East</option>
+                <option value="west">West</option>
+                <option value="central">Central</option>
+                <option value="south">South</option>
+              </select>
+            </label>
+          </div>
+          <div>
+            <label>
+              Parking:
+              <input
+                type="checkbox"
+                name="parking"
+                checked={formData.parking}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              fee:
+              <input
+                type="number"
+                name="fee"
+                value={formData.fee}
+                onChange={handleChange}
+                required
+                min="0.5"
+                max="5"
+                step="0.5"
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              Contact Email:
+              <input
+                type="email"
+                name="contactEmail"
+                value={formData.contactEmail}
+                onChange={handleChange}
                 required
               />
             </label>
@@ -445,112 +392,312 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
 
           <div>
             <label>
-              New Feature:
+              Completion:
+              <select
+                name="completion"
+                value={formData.completion}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Completion Date</option>
+                <option value="completed">Completed</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+              </select>
+            </label>
+          </div>
+
+          <fieldset>
+            <legend>Availability</legend>
+            {["oneBed", "twoBed", "threeBed", "fourPlusBed"].map((bedType) => (
+              <div key={bedType}>
+                <label>
+                  {bedType} Available:
+                  <input
+                    type="checkbox"
+                    name={`${bedType}.available`}
+                    checked={formData.availability[bedType].available}
+                    onChange={handleAvailabilityChange}
+                  />
+                </label>
+                {formData.availability[bedType].available && (
+                  <label>
+                    {bedType} Price From:
+                    <input
+                      type="number"
+                      name={`${bedType}.priceFrom`}
+                      value={formData.availability[bedType].priceFrom}
+                      onChange={handleAvailabilityChange}
+                      min="0"
+                      required
+                    />
+                  </label>
+                )}
+              </div>
+            ))}
+          </fieldset>
+
+          <div>
+            <label>
+              New Brochure:
               <input
                 type="text"
-                value={newFeature}
-                onChange={(e) => setNewFeature(e.target.value)}
+                value={newBrochure}
+                onChange={(e) => setNewBrochure(e.target.value)}
               />
-              <button type="button" onClick={handleAddFeature}>
-                Add Feature
+              <button type="button" onClick={handleAddBrochure}>
+                Add Brochure
               </button>
             </label>
           </div>
 
           <div>
             <label>
-              New Amenity:
+              New Price List:
               <input
                 type="text"
-                value={newAmenity}
-                onChange={(e) => setNewAmenity(e.target.value)}
+                value={newPriceList}
+                onChange={(e) => setNewPriceList(e.target.value)}
               />
-              <button type="button" onClick={handleAddAmenity}>
-                Add Amenity
+              <button type="button" onClick={handleAddPriceList}>
+                Add Price List
               </button>
             </label>
           </div>
+
+          {formData.brochures.length > 0 && (
+            <div>
+              <h3>Brochures</h3>
+              {formData.brochures.map((brochure, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    value={brochure}
+                    onChange={(e) =>
+                      handleBrochureChange(index, e.target.value)
+                    }
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveBrochure(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {formData.priceLists.length > 0 && (
+            <div>
+              <h3>Price Lists</h3>
+              {formData.priceLists.map((priceList, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    value={priceList}
+                    onChange={(e) =>
+                      handlePriceListChange(index, e.target.value)
+                    }
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemovePriceList(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div>
             <label>
-              New Image:
+              Add to landing pages?
               <input
-                type="text"
-                value={newImage}
-                onChange={(e) => setNewImage(e.target.value)}
+                type="checkbox"
+                name="landingPage"
+                checked={formData.landingPage}
+                onChange={handleChange}
               />
-              <button type="button" onClick={handleAddImage}>
-                Add Image
-              </button>
             </label>
           </div>
 
-          {formData.amenities.length > 0 && (
-            <div>
-              <h3>Amenities</h3>
-              {formData.amenities.map((amenity, index) => (
-                <div key={index}>
+          {error && <div style={{ color: "red" }}>{error}</div>}
+
+          {formData.landingPage && (
+            <>
+              <div>
+                <label>
+                  Copy 1:
                   <input
                     type="text"
-                    value={amenity}
-                    onChange={(e) => handleAmenityChange(index, e.target.value)}
+                    name="copy1"
+                    value={formData.copy1}
+                    onChange={handleChange}
+                    maxLength="350"
+                    required
                   />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveAmenity(index)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+                </label>
+              </div>
 
-          {formData.features.length > 0 && (
-            <div>
-              <h3>Features</h3>
-              {formData.features.map((feature, index) => (
-                <div key={index}>
+              <div>
+                <label>
+                  Copy 2:
                   <input
                     type="text"
-                    value={feature}
-                    onChange={(e) => handleFeatureChange(index, e.target.value)}
+                    name="copy2"
+                    value={formData.copy2}
+                    onChange={handleChange}
+                    maxLength="350"
+                    required
                   />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveFeature(index)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+                </label>
+              </div>
 
-          {formData.images.length > 0 && (
-            <div>
-              <h3>Images</h3>
-              {formData.images.map((image, index) => (
-                <div key={index}>
+              <div>
+                <label>
+                  Nearest Station:
                   <input
                     type="text"
-                    value={image}
-                    onChange={(e) => handleImageChange(index, e.target.value)}
+                    name="nearestStation"
+                    value={formData.nearestStation}
+                    onChange={handleChange}
+                    required
                   />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveImage(index)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </>
-      )}
+                </label>
+              </div>
+              <div>
+                <label>
+                  Nearest Station Distance (minutes):
+                  <input
+                    type="number"
+                    name="nearestStationDistance"
+                    value={formData.nearestStationDistance}
+                    onChange={handleChange}
+                    min="1"
+                    required
+                  />
+                </label>
+              </div>
 
-      <button type="submit">Submit</button>
-    </form>
+              <div>
+                <label>
+                  New Feature:
+                  <input
+                    type="text"
+                    value={newFeature}
+                    onChange={(e) => setNewFeature(e.target.value)}
+                  />
+                  <button type="button" onClick={handleAddFeature}>
+                    Add Feature
+                  </button>
+                </label>
+              </div>
+
+              <div>
+                <label>
+                  New Amenity:
+                  <input
+                    type="text"
+                    value={newAmenity}
+                    onChange={(e) => setNewAmenity(e.target.value)}
+                  />
+                  <button type="button" onClick={handleAddAmenity}>
+                    Add Amenity
+                  </button>
+                </label>
+              </div>
+
+              <div>
+                <label>
+                  New Image:
+                  <input
+                    type="text"
+                    value={newImage}
+                    onChange={(e) => setNewImage(e.target.value)}
+                  />
+                  <button type="button" onClick={handleAddImage}>
+                    Add Image
+                  </button>
+                </label>
+              </div>
+
+              {formData.amenities.length > 0 && (
+                <div>
+                  <h3>Amenities</h3>
+                  {formData.amenities.map((amenity, index) => (
+                    <div key={index}>
+                      <input
+                        type="text"
+                        value={amenity}
+                        onChange={(e) =>
+                          handleAmenityChange(index, e.target.value)
+                        }
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveAmenity(index)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {formData.features.length > 0 && (
+                <div>
+                  <h3>Features</h3>
+                  {formData.features.map((feature, index) => (
+                    <div key={index}>
+                      <input
+                        type="text"
+                        value={feature}
+                        onChange={(e) =>
+                          handleFeatureChange(index, e.target.value)
+                        }
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveFeature(index)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {formData.images.length > 0 && (
+                <div>
+                  <h3>Images</h3>
+                  {formData.images.map((image, index) => (
+                    <div key={index}>
+                      <input
+                        type="text"
+                        value={image}
+                        onChange={(e) =>
+                          handleImageChange(index, e.target.value)
+                        }
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage(index)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
   );
 }

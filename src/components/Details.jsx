@@ -128,6 +128,40 @@ export default function DevelopmentDetail() {
           )) || "N/A"}
         </p>
 
+        <p>
+          Brochures:{" "}
+          {development.brochures?.length > 0
+            ? development.brochures.map((brochure, idx) => (
+                <a
+                  key={idx}
+                  href={brochure}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "block", margin: "5px 0" }}
+                >
+                  Brochure {idx + 1}
+                </a>
+              ))
+            : "N/A"}
+        </p>
+
+        <p>
+          Price Lists:{" "}
+          {development.priceLists?.length > 0
+            ? development.priceLists.map((pl, idx) => (
+                <a
+                  key={idx}
+                  href={pl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "block", margin: "5px 0" }}
+                >
+                  Price List {idx + 1}
+                </a>
+              ))
+            : "N/A"}
+        </p>
+
         <h2>Availability</h2>
         <p>
           1 Bed Availability:{" "}
