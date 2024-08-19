@@ -11,8 +11,9 @@ export default function Matching({ data, setData }) {
     maxPrice: 0,
   });
 
-  const [matches, setMatches] = useState();
+  const [matches, setMatches] = useState([]);
   const [error, setError] = useState("");
+  const [selection, setSelection] = useState([]);
 
   const runFilter = () => {
     const filteredData = data.filter((development) => {
@@ -83,9 +84,35 @@ export default function Matching({ data, setData }) {
   };
 
   const clickHandlerTest2 = () => {
+    console.log("data");
     console.log(data);
-    console.log(typeof parseInt(filters.maxPrice));
-    console.log(parseInt(filters.maxPrice));
+    console.log("matches");
+    console.log(matches);
+  };
+
+  const clickHandlerTest3 = () => {
+    console.log(selection);
+  };
+
+  const addToSelection = (development) => {
+    const isAlreadySelected = selection.some(
+      (selectedDevelopment) => selectedDevelopment.name === development.name
+    );
+
+    if (isAlreadySelected) {
+      setError(`"${development.name}" has already been selected`);
+    } else {
+      setSelection((prevSelection) => [...(prevSelection || []), development]);
+      setError("");
+    }
+  };
+
+  const removeFromSelection = (developmentToRemove) => {
+    setSelection((prevSelection) =>
+      prevSelection.filter(
+        (development) => development.name !== developmentToRemove.name
+      )
+    );
   };
 
   return (
@@ -203,15 +230,43 @@ export default function Matching({ data, setData }) {
           </div>
         </div>
 
-        <button type="submit">Submit form </button>
+        <button type="submit">Submit form</button>
       </form>
 
       <button onClick={clickHandlerTest1}>View Filters</button>
       <button onClick={clickHandlerTest2}>View Data</button>
+      <button onClick={clickHandlerTest3}>View Selection</button>
       {error && <div style={{ color: "red" }}>{error}</div>}
 
-      {matches &&
-        matches.map((match, index) => <div key={index}>{match.name}</div>)}
+      <div className={styles["section-container"]}>
+        {/* Matches Section */}
+        <div className={styles["section-box"]}>
+          <h3>Matches</h3>
+          {matches &&
+            matches.map((match, index) => (
+              <div key={index} className={styles["match-item"]}>
+                <div>{match.name}</div>
+                <button onClick={() => addToSelection(match)}>
+                  Add to selection
+                </button>
+              </div>
+            ))}
+        </div>
+
+        {/* Selection Section */}
+        <div className={styles["section-box"]}>
+          <h3>Selection</h3>
+          {selection &&
+            selection.map((development, index) => (
+              <div key={index} className={styles["selection-item"]}>
+                <div>{development.name}</div>
+                <button onClick={() => removeFromSelection(development)}>
+                  Remove from selection
+                </button>
+              </div>
+            ))}
+        </div>
+      </div>
     </>
   );
 }
