@@ -40,20 +40,19 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
   const [newPriceList, setNewPriceList] = useState("");
   const [error, setError] = useState("");
 
-  if (id !== null) {
-    const getDevelopment = async () => {
-      try {
-        const result = await fetchOneDevelopment(id);
-        setFormData(result);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
-    useEffect(() => {
+  useEffect(() => {
+    if (id !== null) {
+      const getDevelopment = async () => {
+        try {
+          const result = await fetchOneDevelopment(id);
+          setFormData(result);
+        } catch (error) {
+          setError(error.message);
+        }
+      };
       getDevelopment();
-    }, []);
-  }
+    }
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -207,9 +206,12 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
 
   const handleAddPriceList = () => {
     if (newPriceList.trim()) {
+      const priceList = {
+        url: newPriceList.trim(),
+      };
       setFormData((prevState) => ({
         ...prevState,
-        priceLists: [...prevState.priceLists, newPriceList.trim()],
+        priceLists: [...prevState.priceLists, priceList],
       }));
       setNewPriceList("");
     }
@@ -217,7 +219,7 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
 
   const handlePriceListChange = (index, value) => {
     const updatedPriceLists = [...formData.priceLists];
-    updatedPriceLists[index] = value;
+    updatedPriceLists[index] = { ...updatedPriceLists[index], url: value };
     setFormData((prevState) => ({
       ...prevState,
       priceLists: updatedPriceLists,
@@ -274,10 +276,14 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
     onSubmit({ ...formData, availability: updatedAvailability });
   };
 
+  const clickTest = () => {
+    console.log(formData);
+  };
+
   return (
     <div className={styles.modal}>
       <div className={styles["modal-content"]}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.form}>
           <div>
             <label>
               Name:
@@ -460,10 +466,10 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
                 value={newPriceList}
                 onChange={(e) => setNewPriceList(e.target.value)}
               />
-              <button type="button" onClick={handleAddPriceList}>
-                Add Price List
-              </button>
             </label>
+            <button type="button" onClick={handleAddPriceList}>
+              Add Price List
+            </button>
           </div>
 
           {formData.brochures.length > 0 && (
@@ -496,11 +502,12 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
                 <div key={index}>
                   <input
                     type="text"
-                    value={priceList}
+                    value={priceList.url || ""}
                     onChange={(e) =>
                       handlePriceListChange(index, e.target.value)
                     }
                   />
+
                   <button
                     type="button"
                     onClick={() => handleRemovePriceList(index)}
@@ -696,6 +703,7 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
           )}
 
           <button type="submit">Submit</button>
+          <button onClick={clickTest}>show form data</button>
         </form>
       </div>
     </div>

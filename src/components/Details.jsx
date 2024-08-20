@@ -151,7 +151,7 @@ export default function DevelopmentDetail() {
             ? development.priceLists.map((pl, idx) => (
                 <a
                   key={idx}
-                  href={pl}
+                  href={pl.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ display: "block", margin: "5px 0" }}

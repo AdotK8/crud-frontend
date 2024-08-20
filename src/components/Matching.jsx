@@ -102,7 +102,7 @@ export default function Matching({ data, setData }) {
     if (isAlreadySelected) {
       setError(`"${development.name}" has already been selected`);
     } else {
-      setSelection((prevSelection) => [...(prevSelection || []), development]);
+      setSelection((prevSelection) => [...prevSelection, development]);
       setError("");
     }
   };
