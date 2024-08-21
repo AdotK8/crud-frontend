@@ -189,6 +189,7 @@ export default function Matching({ data, setData }) {
               onChange={handleFilterChange}
             >
               <option value="All">All</option>
+              <option value="zeroBed">Studio</option>
               <option value="oneBed">1</option>
               <option value="twoBed">2</option>
               <option value="threeBed">3</option>

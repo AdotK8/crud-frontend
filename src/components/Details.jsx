@@ -164,6 +164,13 @@ export default function DevelopmentDetail() {
 
         <h2>Availability</h2>
         <p>
+          Studio Availability:{" "}
+          {development.availability?.zeroBed?.available ? "Yes" : "No"}
+        </p>
+        <p>
+          Studio Price From: £{development.availability?.zeroBed?.priceFrom}
+        </p>
+        <p>
           1 Bed Availability:{" "}
           {development.availability?.oneBed?.available ? "Yes" : "No"}
         </p>

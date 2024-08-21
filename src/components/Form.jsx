@@ -20,6 +20,7 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
     zone: "",
     parking: false,
     availability: {
+      zeroBed: { available: false, priceFrom: 0 },
       oneBed: { available: false, priceFrom: 0 },
       twoBed: { available: false, priceFrom: 0 },
       threeBed: { available: false, priceFrom: 0 },
@@ -39,6 +40,14 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
   const [newBrochure, setNewBrochure] = useState("");
   const [newPriceList, setNewPriceList] = useState("");
   const [error, setError] = useState("");
+
+  const bedtypeObject = {
+    zeroBed: "Studio",
+    oneBed: "1 Bed",
+    twoBed: "2 Bed",
+    threeBed: "3 Bed",
+    fourPlusBed: "4+ Bed",
+  };
 
   useEffect(() => {
     if (id !== null) {
@@ -239,6 +248,9 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
     let errorMessage = "";
 
     const updatedAvailability = { ...formData.availability };
+    if (!formData.availability.zeroBed.available) {
+      updatedAvailability.zeroBed.priceFrom = 0;
+    }
     if (!formData.availability.oneBed.available) {
       updatedAvailability.oneBed.priceFrom = 0;
     }
@@ -416,32 +428,35 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
 
           <fieldset>
             <legend>Availability</legend>
-            {["oneBed", "twoBed", "threeBed", "fourPlusBed"].map((bedType) => (
-              <div key={bedType}>
-                <label>
-                  {bedType} Available:
-                  <input
-                    type="checkbox"
-                    name={`${bedType}.available`}
-                    checked={formData.availability[bedType].available}
-                    onChange={handleAvailabilityChange}
-                  />
-                </label>
-                {formData.availability[bedType].available && (
+
+            {["zeroBed", "oneBed", "twoBed", "threeBed", "fourPlusBed"].map(
+              (bedType) => (
+                <div key={bedType}>
                   <label>
-                    {bedType} Price From:
+                    {bedtypeObject[bedType]} Available:
                     <input
-                      type="number"
-                      name={`${bedType}.priceFrom`}
-                      value={formData.availability[bedType].priceFrom}
+                      type="checkbox"
+                      name={`${bedType}.available`}
+                      checked={formData.availability[bedType].available}
                       onChange={handleAvailabilityChange}
-                      min="0"
-                      required
                     />
                   </label>
-                )}
-              </div>
-            ))}
+                  {formData.availability[bedType].available && (
+                    <label>
+                      {bedtypeObject[bedType]} Price From:
+                      <input
+                        type="number"
+                        name={`${bedType}.priceFrom`}
+                        value={formData.availability[bedType].priceFrom}
+                        onChange={handleAvailabilityChange}
+                        min="0"
+                        required
+                      />
+                    </label>
+                  )}
+                </div>
+              )
+            )}
           </fieldset>
 
           <div>

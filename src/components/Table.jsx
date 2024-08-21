@@ -11,6 +11,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
     parking: "All",
     zone: "All",
     cardinal: "All",
+    zeroBed: "All",
     oneBed: "All",
     twoBed: "All",
     threeBed: "All",
@@ -50,6 +51,9 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
             development.cardinalLocation === filters.cardinal) &&
           (filters.completion === "All" ||
             development.completion === filters.completion) &&
+          (filters.zeroBed === "All" ||
+            development.availability.zeroBed.available ===
+              (filters.zeroBed === "Yes")) &&
           (filters.oneBed === "All" ||
             development.availability.oneBed.available ===
               (filters.oneBed === "Yes")) &&
@@ -139,6 +143,23 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 </select>
               </div>
             </th>
+            {/* Studio bed Filter */}
+            <th>
+              Studio Availability
+              <div className={styles["filters"]}>
+                <select
+                  id="availability-filter"
+                  name="zeroBed"
+                  value={filters.zeroBed}
+                  onChange={handleFilterChange}
+                >
+                  <option value="All">All</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </th>
+            <th>1 Bed Price From</th>
             {/* 1 bed Filter */}
             <th>
               1 Bed Availability
@@ -259,6 +280,15 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
               <td>{development.name}</td>
               <td>{development.zone}</td>
               <td>{development.parking ? "Yes" : "No"}</td>
+              <td>
+                {development.availability?.zeroBed?.available ? "Yes" : "No"}
+              </td>
+              <td>
+                {development.availability?.zeroBed?.priceFrom
+                  ? "£" +
+                    formatNumber(development.availability.zeroBed.priceFrom)
+                  : "N/A"}
+              </td>
               <td>
                 {development.availability?.oneBed?.available ? "Yes" : "No"}
               </td>
