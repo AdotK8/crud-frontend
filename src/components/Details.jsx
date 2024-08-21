@@ -162,6 +162,11 @@ export default function DevelopmentDetail() {
             : "N/A"}
         </p>
 
+        <p>
+          Price Lists Last Updated:{" "}
+          {new Date(development.priceListsLastUpdated).toLocaleDateString()}
+        </p>
+
         <h2>Availability</h2>
         <p>
           Studio Availability:{" "}
@@ -196,11 +201,12 @@ export default function DevelopmentDetail() {
         </p>
 
         <p>Postcode: {development.postcode}</p>
+        <p>Area: {development.area}</p>
         <p>Developer: {development.developer}</p>
         <p>Cardinal Location: {development.cardinalLocation}</p>
         <p>Fee: {development.fee}%</p>
         <p>Contact Email: {development.contactEmail}</p>
-        <p>Completion: {development.completion}</p>
+        <p>Completion Year: {development.completionYear}</p>
         <p>
           Created At: {new Date(development.createdAt).toLocaleDateString()}
         </p>

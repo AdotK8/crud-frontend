@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { fetchOneDevelopment } from "../utils/api";
 import styles from "../styles/details.module.scss";
+import PropTypes from "prop-types";
 
 const POSTCODE_REGEX = /^([A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2})$/i;
 
-export default function DevelopmentForm({ onSubmit, id = null }) {
+function DevelopmentForm({ onSubmit, id = null }) {
   const [formData, setFormData] = useState({
     name: "",
     landingPage: false,
@@ -12,8 +13,6 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
     copy2: "",
     features: [],
     amenities: [],
-    nearestStation: "",
-    nearestStationDistance: "",
     images: [],
     brochures: [],
     priceLists: [],
@@ -29,9 +28,12 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
     postcode: "",
     developer: "",
     cardinalLocation: "",
+    nearestStation: "",
+    nearestStationDistance: "",
     fee: "",
     contactEmail: "",
-    completion: "",
+    completionYear: "",
+    area: "",
   });
 
   const [newAmenity, setNewAmenity] = useState("");
@@ -336,6 +338,19 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
 
           <div>
             <label>
+              Area:
+              <input
+                type="text"
+                name="area"
+                value={formData.area}
+                onChange={handleChange}
+                required
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
               Zone:
               <input
                 type="number"
@@ -410,19 +425,46 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
 
           <div>
             <label>
-              Completion:
+              Completion Year:
               <select
-                name="completion"
-                value={formData.completion}
+                name="completionYear"
+                value={formData.completionYear}
                 onChange={handleChange}
                 required
               >
                 <option value="">Select Completion Date</option>
                 <option value="completed">Completed</option>
+                <option value="2024">2024</option>
                 <option value="2025">2025</option>
                 <option value="2026">2026</option>
                 <option value="2027">2027</option>
               </select>
+            </label>
+          </div>
+
+          <div>
+            <label>
+              Nearest Station:
+              <input
+                type="text"
+                name="nearestStation"
+                value={formData.nearestStation}
+                onChange={handleChange}
+                required
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Nearest Station Distance (minutes):
+              <input
+                type="number"
+                name="nearestStationDistance"
+                value={formData.nearestStationDistance}
+                onChange={handleChange}
+                min="1"
+                required
+              />
             </label>
           </div>
 
@@ -580,32 +622,6 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
 
               <div>
                 <label>
-                  Nearest Station:
-                  <input
-                    type="text"
-                    name="nearestStation"
-                    value={formData.nearestStation}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-              </div>
-              <div>
-                <label>
-                  Nearest Station Distance (minutes):
-                  <input
-                    type="number"
-                    name="nearestStationDistance"
-                    value={formData.nearestStationDistance}
-                    onChange={handleChange}
-                    min="1"
-                    required
-                  />
-                </label>
-              </div>
-
-              <div>
-                <label>
                   New Feature:
                   <input
                     type="text"
@@ -724,3 +740,10 @@ export default function DevelopmentForm({ onSubmit, id = null }) {
     </div>
   );
 }
+
+DevelopmentForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired, // onSubmit must be a function and is required
+  id: PropTypes.string, // id is an optional string
+};
+
+export default DevelopmentForm;

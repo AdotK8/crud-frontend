@@ -7,7 +7,7 @@ export default function Matching({ data, setData }) {
     zone: "All",
     cardinal: "All",
     beds: "All",
-    completion: "All",
+    completionYear: "All",
     maxPrice: 0,
   });
 
@@ -43,8 +43,8 @@ export default function Matching({ data, setData }) {
           development.zone === parseInt(filters.zone)) &&
         (filters.cardinal === "All" ||
           development.cardinalLocation === filters.cardinal) &&
-        (filters.completion === "All" ||
-          development.completion === filters.completion) &&
+        (filters.completionYear === "All" ||
+          development.completionYear === filters.completionYear) &&
         hasPriceWithinRange()
       );
     });
@@ -200,16 +200,16 @@ export default function Matching({ data, setData }) {
 
         {/* Completion Filter */}
         <div>
-          <label htmlFor="completion-filter">Completion</label>
+          <label htmlFor="completion-filter">Completion Year</label>
           <div className={styles["filters"]}>
             <select
               id="completion-filter"
-              name="completion"
-              value={filters.completion}
+              name="completionYear"
+              value={filters.completionYear}
               onChange={handleFilterChange}
             >
               <option value="All">Any</option>
-              <option value="completed">Completed</option>
+              <option value="2024">2024</option>
               <option value="2025">2025</option>
               <option value="2026">2026</option>
               <option value="2027">2027</option>

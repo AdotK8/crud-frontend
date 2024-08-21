@@ -16,7 +16,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
     twoBed: "All",
     threeBed: "All",
     fourBed: "All",
-    completion: "All",
+    completionYear: "All",
   });
 
   const navigate = useNavigate();
@@ -49,8 +49,8 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
             development.zone === parseInt(filters.zone)) &&
           (filters.cardinal === "All" ||
             development.cardinalLocation === filters.cardinal) &&
-          (filters.completion === "All" ||
-            development.completion === filters.completion) &&
+          (filters.completionYear === "All" ||
+            development.completionYear === filters.completionYear) &&
           (filters.zeroBed === "All" ||
             development.availability.zeroBed.available ===
               (filters.zeroBed === "Yes")) &&
@@ -229,6 +229,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
             </th>
             <th>4+ Bed Price From</th>
             <th>Postcode</th>
+            <th>Area</th>
             <th>Developer</th>
             {/* Cardinal Filter */}
             <th>
@@ -250,16 +251,17 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
               </div>
             </th>
             <th>
-              Completion
+              Completion Year
               <div className={styles["filters"]}>
                 <select
                   id="completion-filter"
-                  name="completion"
-                  value={filters.completion}
+                  name="completionYear"
+                  value={filters.completionYear}
                   onChange={handleFilterChange}
                 >
                   <option value="All">All</option>
                   <option value="completed">Completed</option>
+                  <option value="2024">2024</option>
                   <option value="2025">2025</option>
                   <option value="2026">2026</option>
                   <option value="2027">2027</option>
@@ -328,9 +330,10 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                   : "N/A"}
               </td>
               <td>{development.postcode}</td>
+              <td>{development.area}</td>
               <td>{development.developer}</td>
               <td>{development.cardinalLocation}</td>
-              <td>{development.completion}</td>
+              <td>{development.completionYear}</td>
               <td>{development.fee + "%"}</td>
               <td>{development.contactEmail}</td>
               <td>{new Date(development.updatedAt).toLocaleDateString()}</td>
