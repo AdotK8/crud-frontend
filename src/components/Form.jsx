@@ -35,6 +35,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
     completionYear: "",
     completionQuarter: "",
     area: "",
+    emailCopy: "",
   });
 
   const [newAmenity, setNewAmenity] = useState("");
@@ -69,10 +70,12 @@ function DevelopmentForm({ onSubmit, id = null }) {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
+    //resets completion quarter to empty if completed is selected
     if (value === "completed") {
       formData.completionQuarter = "";
     }
 
+    //postcode validation
     if (name === "postcode") {
       const input = e.target;
       if (!POSTCODE_REGEX.test(value)) {
@@ -491,6 +494,20 @@ function DevelopmentForm({ onSubmit, id = null }) {
                 value={formData.nearestStationDistance}
                 onChange={handleChange}
                 min="1"
+                required
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              Email Copy (Key Features):
+              <input
+                type="text"
+                name="emailCopy"
+                value={formData.emailCopy}
+                onChange={handleChange}
+                maxLength="100"
                 required
               />
             </label>

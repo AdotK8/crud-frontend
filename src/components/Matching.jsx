@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "../styles/matching.module.scss";
+import { sendMatchEmail } from "../utils/api";
 
 export default function Matching({ data, setData }) {
   const [filters, setFilters] = useState({
@@ -79,21 +80,6 @@ export default function Matching({ data, setData }) {
     runFilter();
   };
 
-  const clickHandlerTest1 = () => {
-    console.log(filters);
-  };
-
-  const clickHandlerTest2 = () => {
-    console.log("data");
-    console.log(data);
-    console.log("matches");
-    console.log(matches);
-  };
-
-  const clickHandlerTest3 = () => {
-    console.log(selection);
-  };
-
   const addToSelection = (development) => {
     const isAlreadySelected = selection.some(
       (selectedDevelopment) => selectedDevelopment.name === development.name
@@ -113,6 +99,11 @@ export default function Matching({ data, setData }) {
         (development) => development.name !== developmentToRemove.name
       )
     );
+  };
+
+  const sendEmail = async () => {
+    console.log(selection);
+    sendMatchEmail(selection);
   };
 
   return (
@@ -234,9 +225,6 @@ export default function Matching({ data, setData }) {
         <button type="submit">Submit form</button>
       </form>
 
-      <button onClick={clickHandlerTest1}>View Filters</button>
-      <button onClick={clickHandlerTest2}>View Data</button>
-      <button onClick={clickHandlerTest3}>View Selection</button>
       {error && <div style={{ color: "red" }}>{error}</div>}
 
       <div className={styles["section-container"]}>
@@ -266,6 +254,9 @@ export default function Matching({ data, setData }) {
                 </button>
               </div>
             ))}
+          {selection.length > 0 && (
+            <button onClick={sendEmail}>send email</button>
+          )}
         </div>
       </div>
     </>

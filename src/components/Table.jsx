@@ -270,7 +270,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
             </th>
             <th>Fee</th>
             <th>Contact Email</th>
-            <th>Updated At</th>
           </tr>
         </thead>
         <tbody>
@@ -336,7 +335,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
               <td>{development.completionYear}</td>
               <td>{development.fee + "%"}</td>
               <td>{development.contactEmail}</td>
-              <td>{new Date(development.updatedAt).toLocaleDateString()}</td>
             </tr>
           ))}
         </tbody>

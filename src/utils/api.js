@@ -1,5 +1,32 @@
 const API_BASE_URL = "http://localhost:3000/api/developments";
 
+export const sendMatchEmail = async (selection) => {
+  console.log("Selection:", selection);
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/send-email`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        selection,
+        email: "ahmed@yaseproperty.com",
+      }),
+    });
+
+    // Check if the request was successful
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Email sent successfully:", data);
+    } else {
+      console.error("Error sending email:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Network error:", error);
+  }
+};
+
 export const fetchAllDevelopments = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/get`);

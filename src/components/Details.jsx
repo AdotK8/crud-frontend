@@ -208,6 +208,7 @@ export default function DevelopmentDetail() {
         <p>Contact Email: {development.contactEmail}</p>
         <p>Completion Quarter: {development.completionQuarter}</p>
         <p>Completion Year: {development.completionYear}</p>
+        <p>Email Copy (Key Features): {development.emailCopy}</p>
         <p>
           Created At: {new Date(development.createdAt).toLocaleDateString()}
         </p>
