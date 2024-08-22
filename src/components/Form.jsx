@@ -33,6 +33,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
     fee: "",
     contactEmail: "",
     completionYear: "",
+    completionQuarter: "",
     area: "",
   });
 
@@ -67,6 +68,10 @@ function DevelopmentForm({ onSubmit, id = null }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    if (value === "completed") {
+      formData.completionQuarter = "";
+    }
 
     if (name === "postcode") {
       const input = e.target;
@@ -441,6 +446,29 @@ function DevelopmentForm({ onSubmit, id = null }) {
               </select>
             </label>
           </div>
+
+          {formData.completionYear !== "completed" &&
+            formData.completionYear !== "" && (
+              <>
+                <div>
+                  <label>
+                    Completion Quarter:
+                    <select
+                      name="completionQuarter"
+                      value={formData.completionQuarter}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Select completion quarter</option>
+                      <option value="Q1">Q1</option>
+                      <option value="Q2">Q2</option>
+                      <option value="Q3">Q3</option>
+                      <option value="Q4">Q4</option>
+                    </select>
+                  </label>
+                </div>
+              </>
+            )}
 
           <div>
             <label>

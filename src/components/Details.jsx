@@ -206,6 +206,7 @@ export default function DevelopmentDetail() {
         <p>Cardinal Location: {development.cardinalLocation}</p>
         <p>Fee: {development.fee}%</p>
         <p>Contact Email: {development.contactEmail}</p>
+        <p>Completion Quarter: {development.completionQuarter}</p>
         <p>Completion Year: {development.completionYear}</p>
         <p>
           Created At: {new Date(development.createdAt).toLocaleDateString()}
