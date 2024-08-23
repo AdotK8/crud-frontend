@@ -440,8 +440,8 @@ function DevelopmentForm({ onSubmit, id = null }) {
                 onChange={handleChange}
                 required
               >
-                <option value="">Select Completion Date</option>
-                <option value="completed">Completed</option>
+                <option value="">Select completion date</option>
+                <option value="Completed">Completed</option>
                 <option value="2024">2024</option>
                 <option value="2025">2025</option>
                 <option value="2026">2026</option>
@@ -450,7 +450,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
             </label>
           </div>
 
-          {formData.completionYear !== "completed" &&
+          {formData.completionYear !== "Completed" &&
             formData.completionYear !== "" && (
               <>
                 <div>
@@ -536,7 +536,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                         name={`${bedType}.priceFrom`}
                         value={formData.availability[bedType].priceFrom}
                         onChange={handleAvailabilityChange}
-                        min="0"
+                        min="100000"
                         required
                       />
                     </label>

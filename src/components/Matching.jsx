@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "../styles/matching.module.scss";
 import { sendMatchEmail } from "../utils/api";
+import { users } from "../utils/users";
 
 export default function Matching({ data, setData }) {
   const [filters, setFilters] = useState({
@@ -15,6 +16,8 @@ export default function Matching({ data, setData }) {
   const [matches, setMatches] = useState([]);
   const [error, setError] = useState("");
   const [selection, setSelection] = useState([]);
+  const [selectedUser, setSelectedUser] = useState("");
+  const [userSelectError, setUserSelectError] = useState("");
 
   const runFilter = () => {
     const filteredData = data.filter((development) => {
@@ -102,10 +105,28 @@ export default function Matching({ data, setData }) {
   };
 
   const sendEmail = async () => {
-    console.log(selection);
-    sendMatchEmail(selection);
-  };
+    if (!selectedUser) {
+      setUserSelectError("Please select a user to send the email.");
+      return;
+    }
 
+    const selectedUserObj = users.find(
+      (user) => user[Object.keys(user)[0]] === selectedUser
+    );
+    const selectedUserName = selectedUserObj
+      ? Object.keys(selectedUserObj)[0]
+      : "";
+
+    try {
+      await sendMatchEmail(selection, selectedUser, selectedUserName);
+
+      setSelection([]);
+      setUserSelectError("");
+      alert("Email sent successfully and selection cleared!");
+    } catch (error) {
+      setUserSelectError("Error sending email: " + error.message);
+    }
+  };
   return (
     <>
       <div>Enter Client Requirements to get suggestions</div>
@@ -200,6 +221,7 @@ export default function Matching({ data, setData }) {
               onChange={handleFilterChange}
             >
               <option value="All">Any</option>
+              <option value="Completed">Completed</option>
               <option value="2024">2024</option>
               <option value="2025">2025</option>
               <option value="2026">2026</option>
@@ -235,6 +257,17 @@ export default function Matching({ data, setData }) {
             matches.map((match, index) => (
               <div key={index} className={styles["match-item"]}>
                 <div>{match.name}</div>
+
+                <p>
+                  Availability Updated At:{" "}
+                  {new Date(
+                    match.availability.lastUpdated
+                  ).toLocaleDateString()}
+                </p>
+                <p>
+                  Price Lists Last Updated:{" "}
+                  {new Date(match.priceListsLastUpdated).toLocaleDateString()}
+                </p>
                 <button onClick={() => addToSelection(match)}>
                   Add to selection
                 </button>
@@ -255,7 +288,31 @@ export default function Matching({ data, setData }) {
               </div>
             ))}
           {selection.length > 0 && (
-            <button onClick={sendEmail}>send email</button>
+            <>
+              <div>
+                <label htmlFor="user-filter">Select User</label>
+                <select
+                  id="user-filter"
+                  value={selectedUser}
+                  onChange={(e) => setSelectedUser(e.target.value)}
+                >
+                  <option value="">Select a user</option>
+                  {users.map((user, index) => {
+                    const userName = Object.keys(user)[0];
+                    const userEmail = user[userName];
+                    return (
+                      <option key={index} value={userEmail}>
+                        {userName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <button onClick={sendEmail}>Send email</button>
+              {userSelectError && (
+                <div style={{ color: "red" }}>{userSelectError}</div>
+              )}
+            </>
           )}
         </div>
       </div>

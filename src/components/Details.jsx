@@ -43,6 +43,10 @@ export default function DevelopmentDetail() {
     setErrorMessage("");
   };
 
+  const formatNumber = (number) => {
+    return new Intl.NumberFormat().format(number);
+  };
+
   const handleDeleteClick = () => {
     setIsDeleteModalOpen(true);
   };
@@ -173,31 +177,55 @@ export default function DevelopmentDetail() {
           {development.availability?.zeroBed?.available ? "Yes" : "No"}
         </p>
         <p>
-          Studio Price From: £{development.availability?.zeroBed?.priceFrom}
+          Studio Price From:
+          {development.availability?.zeroBed?.priceFrom
+            ? "£" + formatNumber(development.availability.zeroBed.priceFrom)
+            : "N/A"}
         </p>
         <p>
           1 Bed Availability:{" "}
           {development.availability?.oneBed?.available ? "Yes" : "No"}
         </p>
-        <p>1 Bed Price From: £{development.availability?.oneBed?.priceFrom}</p>
+        <p>
+          1 Bed Price From:{" "}
+          {development.availability?.oneBed?.priceFrom
+            ? "£" + formatNumber(development.availability.oneBed.priceFrom)
+            : "N/A"}
+        </p>
         <p>
           2 Bed Availability:{" "}
           {development.availability?.twoBed?.available ? "Yes" : "No"}
         </p>
-        <p>2 Bed Price From: £{development.availability?.twoBed?.priceFrom}</p>
+        <p>
+          2 Bed Price From:{" "}
+          {development.availability?.twoBed?.priceFrom
+            ? "£" + formatNumber(development.availability.twoBed.priceFrom)
+            : "N/A"}
+        </p>
         <p>
           3 Bed Availability:{" "}
           {development.availability?.threeBed?.available ? "Yes" : "No"}
         </p>
         <p>
-          3 Bed Price From: £{development.availability?.threeBed?.priceFrom}
+          3 Bed Price From:{" "}
+          {development.availability?.threeBed?.priceFrom
+            ? "£" + formatNumber(development.availability.threeBed.priceFrom)
+            : "N/A"}
         </p>
         <p>
           4+ Bed Availability:{" "}
           {development.availability?.fourPlusBed?.available ? "Yes" : "No"}
         </p>
         <p>
-          4+ Bed Price From: £{development.availability?.fourPlusBed?.priceFrom}
+          4+ Bed Price From:{" "}
+          {development.availability?.fourPlusBed?.priceFrom
+            ? "£" + formatNumber(development.availability.fourPlusBed.priceFrom)
+            : "N/A"}
+        </p>
+
+        <p>
+          Availability Last Updated:{" "}
+          {new Date(development.availability.lastUpdated).toLocaleDateString()}
         </p>
 
         <p>Postcode: {development.postcode}</p>
@@ -212,9 +240,7 @@ export default function DevelopmentDetail() {
         <p>
           Created At: {new Date(development.createdAt).toLocaleDateString()}
         </p>
-        <p>
-          Updated At: {new Date(development.updatedAt).toLocaleDateString()}
-        </p>
+
         <button onClick={handleEditClick}>Edit Development</button>
         {isModalOpen && (
           <div className={styles["modal"]}>

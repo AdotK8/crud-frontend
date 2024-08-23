@@ -1,8 +1,6 @@
 const API_BASE_URL = "http://localhost:3000/api/developments";
 
-export const sendMatchEmail = async (selection) => {
-  console.log("Selection:", selection);
-
+export const sendMatchEmail = async (selection, email, name) => {
   try {
     const response = await fetch(`${API_BASE_URL}/send-email`, {
       method: "POST",
@@ -11,7 +9,8 @@ export const sendMatchEmail = async (selection) => {
       },
       body: JSON.stringify({
         selection,
-        email: "ahmed@yaseproperty.com",
+        email,
+        name,
       }),
     });
 
