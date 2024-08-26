@@ -10,6 +10,7 @@ import { fetchAllDevelopments } from "../utils/api";
 import DevelopmentDetail from "./Details";
 import Navbar from "./Navbar";
 import Matching from "./Matching";
+import MapPage from "./Maps";
 
 function AppContent() {
   const [data, setData] = useState([]);
@@ -61,6 +62,8 @@ function AppContent() {
           element={<Matching data={data} setData={setData} />}
         />
         <Route path="/development/:id" element={<DevelopmentDetail />} />
+
+        <Route path="/map" element={<MapPage />} />
       </Routes>
     </>
   );
