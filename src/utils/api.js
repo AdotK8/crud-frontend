@@ -39,6 +39,19 @@ export const fetchAllDevelopments = async () => {
   }
 };
 
+export const fetchMappingInfo = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/mapping/get`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const fetchOneDevelopment = async (id) => {
   try {
     const response = await fetch(`${API_BASE_URL}/get/${id}`);
