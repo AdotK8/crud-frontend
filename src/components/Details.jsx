@@ -229,6 +229,8 @@ export default function DevelopmentDetail() {
         </p>
 
         <p>Postcode: {development.postcode}</p>
+        <p>latitude: {development.coords[0].latitude}</p>
+        <p>longitude: {development.coords[0].longitude}</p>
         <p>Area: {development.area}</p>
         <p>Developer: {development.developer}</p>
         <p>Cardinal Location: {development.cardinalLocation}</p>

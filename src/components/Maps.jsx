@@ -18,8 +18,8 @@ const center = {
 };
 
 const markerPosition = {
-  lat: 51.509865,
-  lng: -0.118092,
+  lat: 51.5506885,
+  lng: 0.009348199999999999,
 };
 
 function MapPage() {

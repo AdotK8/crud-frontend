@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchOneDevelopment } from "../utils/api";
+import { fetchOneDevelopment, fetchCoordinates } from "../utils/api";
 import styles from "../styles/details.module.scss";
 import PropTypes from "prop-types";
 
@@ -26,6 +26,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
       fourPlusBed: { available: false, priceFrom: 0 },
     },
     postcode: "",
+    coords: [],
     developer: "",
     cardinalLocation: "",
     nearestStation: "",
@@ -253,7 +254,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let errorMessage = "";
 
@@ -295,7 +296,12 @@ function DevelopmentForm({ onSubmit, id = null }) {
 
     setError("");
 
-    onSubmit({ ...formData, availability: updatedAvailability });
+    try {
+      const coords = await fetchCoordinates(formData.postcode);
+      onSubmit({ ...formData, availability: updatedAvailability, coords });
+    } catch (error) {
+      console.error("Error fetching coordinates:", error.message);
+    }
   };
 
   const clickTest = () => {
@@ -787,8 +793,8 @@ function DevelopmentForm({ onSubmit, id = null }) {
 }
 
 DevelopmentForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired, // onSubmit must be a function and is required
-  id: PropTypes.string, // id is an optional string
+  onSubmit: PropTypes.func.isRequired,
+  id: PropTypes.string,
 };
 
 export default DevelopmentForm;

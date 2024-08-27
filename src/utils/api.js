@@ -113,3 +113,25 @@ export const deleteDevelopment = async (id) => {
     throw error;
   }
 };
+
+export const fetchCoordinates = async (postcode) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/coords`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ postcode }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
