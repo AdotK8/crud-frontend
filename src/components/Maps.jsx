@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 import {
   APIProvider,
   Map,
-  AdvancedMarker,
-  Pin,
   InfoWindow,
+  useMap,
 } from "@vis.gl/react-google-maps";
 import { fetchMappingInfo } from "../utils/api";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
@@ -21,6 +20,36 @@ const center = {
   lng: -0.118092,
 };
 
+function Markers({ developments, onMarkerClick }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (map && developments.length > 0) {
+      const markers = developments.map((development) => {
+        const marker = new google.maps.Marker({
+          position: {
+            lat: development.coords[0].latitude,
+            lng: development.coords[0].longitude,
+          },
+          map: map,
+        });
+
+        marker.addListener("click", () => {
+          onMarkerClick(development);
+        });
+
+        return marker;
+      });
+
+      new MarkerClusterer({ map, markers });
+
+      console.log(`Created ${markers.length} markers.`);
+    }
+  }, [map, developments]);
+
+  return null;
+}
+
 function MapPage() {
   const [developments, setDevelopments] = useState([]);
   const [error, setError] = useState();
@@ -34,10 +63,11 @@ function MapPage() {
   const fetchData = async () => {
     try {
       const result = await fetchMappingInfo();
-      console.log("result", result);
+      console.log("Fetched mapping info:", result);
       setDevelopments(result);
     } catch (error) {
       setError(error);
+      console.error("Error fetching mapping info:", error);
     }
   };
 
@@ -50,13 +80,10 @@ function MapPage() {
   };
 
   return (
-    <APIProvider
-      apiKey={process.env.MAP_KEY}
-      onLoad={() => console.log("Maps API has loaded.")}
-    >
+    <APIProvider apiKey={process.env.MAP_KEY}>
       <Map
         style={containerStyle}
-        defaultZoom={11}
+        defaultZoom={12}
         defaultCenter={center}
         mapId="DEMO_MAP_ID"
       >
@@ -87,25 +114,6 @@ function MapPage() {
         )}
       </Map>
     </APIProvider>
-  );
-}
-
-function Markers({ developments, onMarkerClick }) {
-  return (
-    <>
-      {developments.map((development) => (
-        <AdvancedMarker
-          key={development._id}
-          position={{
-            lat: development.coords[0].latitude,
-            lng: development.coords[0].longitude,
-          }}
-          onClick={() => onMarkerClick(development)}
-        >
-          <Pin />
-        </AdvancedMarker>
-      ))}
-    </>
   );
 }
 
