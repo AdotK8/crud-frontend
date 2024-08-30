@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 import styles from "../styles/table.module.scss";
 import DevelopmentForm from "./Form";
 import { createDevelopment, fetchAllDevelopments } from "../utils/api";
@@ -100,137 +102,12 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
 
   return (
     <div className={styles["table-container"]}>
-      <div className={styles["table-header"]}>
-        <h1>Property Developments</h1>
-      </div>
-
-      <table>
-        <thead>
+      <Table responsive bordered hover striped>
+        <thead className="table-header">
           <tr>
+            {/* TABLE HEADERS */}
             <th>Name</th>
-            {/* Zone Filter */}
-            <th>
-              Zone
-              <div className={styles["filters"]}>
-                <select
-                  id="zone-filter"
-                  name="zone"
-                  value={filters.zone}
-                  onChange={handleFilterChange}
-                >
-                  <option value="All">All</option>
-                  {Array.from({ length: 9 }, (_, i) => i + 1).map((zone) => (
-                    <option key={zone} value={zone}>
-                      {zone}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </th>
-            {/* Parking Filter */}
-            <th>
-              Parking
-              <div className={styles["filters"]}>
-                <select
-                  id="parking-filter"
-                  name="parking"
-                  value={filters.parking}
-                  onChange={handleFilterChange}
-                >
-                  <option value="All">All</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </div>
-            </th>
-            {/* Studio bed Filter */}
-            <th>
-              Studio Availability
-              <div className={styles["filters"]}>
-                <select
-                  id="availability-filter"
-                  name="zeroBed"
-                  value={filters.zeroBed}
-                  onChange={handleFilterChange}
-                >
-                  <option value="All">All</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </div>
-            </th>
-            <th>1 Bed Price From</th>
-            {/* 1 bed Filter */}
-            <th>
-              1 Bed Availability
-              <div className={styles["filters"]}>
-                <select
-                  id="availability-filter"
-                  name="oneBed"
-                  value={filters.oneBed}
-                  onChange={handleFilterChange}
-                >
-                  <option value="All">All</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </div>
-            </th>
-            <th>1 Bed Price From</th>
-            {/* 2 bed Filter */}
-            <th>
-              2 Bed Availability
-              <div className={styles["filters"]}>
-                <select
-                  id="availability-filter"
-                  name="twoBed"
-                  value={filters.twoBed}
-                  onChange={handleFilterChange}
-                >
-                  <option value="All">All</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </div>
-            </th>
-            <th>2 Bed Price From</th>
-            {/* 3 bed Filter */}
-            <th>
-              3 Bed Availability
-              <div className={styles["filters"]}>
-                <select
-                  id="availability-filter"
-                  name="threeBed"
-                  value={filters.threeBed}
-                  onChange={handleFilterChange}
-                >
-                  <option value="All">All</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </div>
-            </th>
-            <th>3 Bed Price From</th>
-            {/* 4 bed Filter */}
-            <th>
-              4+ Bed Availability
-              <div className={styles["filters"]}>
-                <select
-                  id="availability-filter"
-                  name="fourBed"
-                  value={filters.fourBed}
-                  onChange={handleFilterChange}
-                >
-                  <option value="All">All</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </div>
-            </th>
-            <th>4+ Bed Price From</th>
-            <th>Postcode</th>
             <th>Area</th>
-            <th>Developer</th>
             {/* Cardinal Filter */}
             <th>
               Cardinal Location
@@ -250,6 +127,26 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 </select>
               </div>
             </th>
+            {/* Zone Filter */}
+            <th>
+              Zone
+              <div className={styles["filters"]}>
+                <select
+                  id="zone-filter"
+                  name="zone"
+                  value={filters.zone}
+                  onChange={handleFilterChange}
+                >
+                  <option value="All">All</option>
+                  {Array.from({ length: 9 }, (_, i) => i + 1).map((zone) => (
+                    <option key={zone} value={zone}>
+                      {zone}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </th>
+            <th>Developer</th>
             <th>
               Completion Year
               <div className={styles["filters"]}>
@@ -260,7 +157,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                   onChange={handleFilterChange}
                 >
                   <option value="All">All</option>
-                  <option value="completed">Completed</option>
+                  <option value="Completed">Completed</option>
                   <option value="2024">2024</option>
                   <option value="2025">2025</option>
                   <option value="2026">2026</option>
@@ -268,81 +165,164 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 </select>
               </div>
             </th>
+
+            {/* Parking Filter */}
+            <th>
+              Parking
+              <div className={styles["filters"]}>
+                <select
+                  id="parking-filter"
+                  name="parking"
+                  value={filters.parking}
+                  onChange={handleFilterChange}
+                >
+                  <option value="All">All</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+            </th>
+            {/* Studio bed Filter */}
+            <th>
+              Studio Availability
+              <div className={styles["filters"]}>
+                <select
+                  id="availability-filter"
+                  name="zeroBed"
+                  value={filters.zeroBed}
+                  onChange={handleFilterChange}
+                >
+                  <option value="All">All</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+            </th>
+            {/* 1 bed Filter */}
+            <th>
+              1 Bed Availability
+              <div className={styles["filters"]}>
+                <select
+                  id="availability-filter"
+                  name="oneBed"
+                  value={filters.oneBed}
+                  onChange={handleFilterChange}
+                >
+                  <option value="All">All</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+            </th>
+
+            {/* 2 bed Filter */}
+            <th>
+              2 Bed Availability
+              <div className={styles["filters"]}>
+                <select
+                  id="availability-filter"
+                  name="twoBed"
+                  value={filters.twoBed}
+                  onChange={handleFilterChange}
+                >
+                  <option value="All">All</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+            </th>
+            {/* 3 bed Filter */}
+            <th>
+              3 Bed Availability
+              <div className={styles["filters"]}>
+                <select
+                  id="availability-filter"
+                  name="threeBed"
+                  value={filters.threeBed}
+                  onChange={handleFilterChange}
+                >
+                  <option value="All">All</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+            </th>
+            {/* 4 bed Filter */}
+            <th>
+              4+ Bed Availability
+              <div className={styles["filters"]}>
+                <select
+                  id="availability-filter"
+                  name="fourBed"
+                  value={filters.fourBed}
+                  onChange={handleFilterChange}
+                >
+                  <option value="All">All</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+            </th>
             <th>Fee</th>
             <th>Contact Email</th>
           </tr>
         </thead>
+
+        {/* TABLE BODY */}
         <tbody>
           {data.map((development) => (
-            <tr
-              key={development._id}
-              onClick={() => developmentViewClickHandler(development._id)}
-            >
-              <td>{development.name}</td>
+            <tr key={development._id}>
+              {/* Add the key prop here */}
+              <td
+                className="dev-name"
+                key={development._id}
+                onClick={() => developmentViewClickHandler(development._id)}
+              >
+                {development.name}{" "}
+              </td>
+              <td>{development.area}</td>
+              <td>{development.cardinalLocation}</td>
               <td>{development.zone}</td>
+              <td>{development.developer}</td>
+              <td>{development.completionYear}</td>
               <td>{development.parking ? "Yes" : "No"}</td>
               <td>
-                {development.availability?.zeroBed?.available ? "Yes" : "No"}
-              </td>
-              <td>
-                {development.availability?.zeroBed?.priceFrom
+                {development.availability?.zeroBed?.available
                   ? "£" +
                     formatNumber(development.availability.zeroBed.priceFrom)
-                  : "N/A"}
-              </td>
-              <td>
-                {development.availability?.oneBed?.available ? "Yes" : "No"}
-              </td>
-              <td>
-                {development.availability?.oneBed?.priceFrom
-                  ? "£" +
-                    formatNumber(development.availability.oneBed.priceFrom)
-                  : "N/A"}
-              </td>
-              <td>
-                {development.availability?.twoBed?.available ? "Yes" : "No"}
-              </td>
-              <td>
-                {development.availability?.twoBed?.priceFrom
-                  ? "£" +
-                    formatNumber(development.availability.twoBed.priceFrom)
-                  : "N/A"}
-              </td>
-              <td>
-                {development.availability?.threeBed?.available ? "Yes" : "No"}
-              </td>
-              <td>
-                {development.availability?.threeBed?.priceFrom
-                  ? "£" +
-                    formatNumber(development.availability.threeBed.priceFrom)
-                  : "N/A"}
-              </td>
-              <td>
-                {development.availability?.fourPlusBed?.available
-                  ? "Yes"
                   : "No"}
               </td>
               <td>
-                {development.availability?.fourPlusBed?.priceFrom
+                {development.availability?.oneBed?.available
+                  ? "£" +
+                    formatNumber(development.availability.oneBed.priceFrom)
+                  : "No"}
+              </td>
+              <td>
+                {development.availability?.twoBed?.available
+                  ? "£" +
+                    formatNumber(development.availability.twoBed.priceFrom)
+                  : "No"}
+              </td>
+              <td>
+                {development.availability?.threeBed?.available
+                  ? "£" +
+                    formatNumber(development.availability.threeBed.priceFrom)
+                  : "No"}
+              </td>
+              <td>
+                {development.availability?.fourPlusBed?.available
                   ? "£" +
                     formatNumber(development.availability.fourPlusBed.priceFrom)
-                  : "N/A"}
+                  : "No"}
               </td>
-              <td>{development.postcode}</td>
-              <td>{development.area}</td>
-              <td>{development.developer}</td>
-              <td>{development.cardinalLocation}</td>
-              <td>{development.completionYear}</td>
               <td>{development.fee + "%"}</td>
               <td>{development.contactEmail}</td>
             </tr>
           ))}
         </tbody>
-      </table>
-      <button className={styles["add-button"]} onClick={handleAddClick}>
+      </Table>
+      <Button
+        onClick={handleAddClick}
+        variant="outline-primary"
+        className="btn-custom"
+      >
         Add New Development
-      </button>
-
+      </Button>{" "}
       {isModalOpen && (
         <div className={styles["modal"]}>
           <div className={styles["modal-content"]}>

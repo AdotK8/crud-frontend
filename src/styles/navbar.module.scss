@@ -1,0 +1,15 @@
+@import "./colours.scss";
+
+.navbarCustom {
+  background-color: $yase-brown;
+}
+
+.navLinkCustom {
+  color: $yase-yellow;
+  font-weight: 500;
+}
+
+.navLinkCustom:hover {
+  color: $yase-brown;
+  background-color: #e2e8f0;
+}
