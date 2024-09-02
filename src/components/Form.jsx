@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchOneDevelopment, fetchCoordinates } from "../utils/api";
-import styles from "../styles/details.module.scss";
+import styles from "../styles/form.module.scss";
 import PropTypes from "prop-types";
 
 const POSTCODE_REGEX = /^([A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2})$/i;

@@ -1,15 +1,32 @@
 @import "./colours.scss";
 
-.navbarCustom {
+.navbar {
   background-color: $yase-brown;
-}
+  padding: 15px;
 
-.navLinkCustom {
-  color: $yase-yellow;
-  font-weight: 500;
-}
+  .navList {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
 
-.navLinkCustom:hover {
-  color: $yase-brown;
-  background-color: #e2e8f0;
+    .navItem {
+      margin: 0 15px;
+
+      .navLink {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 10px 20px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+
+        &:hover {
+          background-color: $yase-brown;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
 }
