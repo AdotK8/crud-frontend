@@ -247,12 +247,10 @@ export default function DevelopmentDetail() {
         {isModalOpen && (
           <div className={styles["modal"]}>
             <div className={styles["modal-content"]}>
-              <span className={styles["close"]} onClick={handleCloseModal}>
-                &times;
-              </span>
               <DevelopmentForm
                 onSubmit={handleFormSubmit}
                 id={development._id}
+                handleCloseModal={handleCloseModal}
               />
               {errorMessage && (
                 <div

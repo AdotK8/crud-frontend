@@ -334,7 +334,10 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
             <span className={styles["close"]} onClick={handleCloseModal}>
               &times;
             </span>
-            <DevelopmentForm onSubmit={handleFormSubmit} />
+            <DevelopmentForm
+              onSubmit={handleFormSubmit}
+              handleCloseModal={handleCloseModal}
+            />
             {errorMessage && (
               <div className={styles["error-message"]} style={{ color: "red" }}>
                 {errorMessage}

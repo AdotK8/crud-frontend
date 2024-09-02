@@ -4,8 +4,9 @@ import styles from "../styles/form.module.scss";
 import PropTypes from "prop-types";
 
 const POSTCODE_REGEX = /^([A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2})$/i;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function DevelopmentForm({ onSubmit, id = null }) {
+function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
   const [formData, setFormData] = useState({
     name: "",
     landingPage: false,
@@ -289,6 +290,10 @@ function DevelopmentForm({ onSubmit, id = null }) {
       errorMessage = "At least one brochure is required.";
     }
 
+    if (!EMAIL_REGEX.test(formData.contactEmail)) {
+      errorMessage = "Please enter a valid email address.";
+    }
+
     if (errorMessage) {
       setError(errorMessage);
       return;
@@ -304,18 +309,18 @@ function DevelopmentForm({ onSubmit, id = null }) {
     }
   };
 
-  const clickTest = () => {
-    console.log(formData);
-  };
-
   return (
     <div className={styles.modal}>
       <div className={styles["modal-content"]}>
+        <span className={styles["close"]} onClick={handleCloseModal}>
+          &times;
+        </span>
         <form onSubmit={handleSubmit} className={styles.form}>
           <div>
             <label>
               Name:
               <input
+                className={styles["form-input"]}
                 type="text"
                 name="name"
                 value={formData.name}
@@ -328,6 +333,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               Developer:
               <input
+                className={styles["form-input"]}
                 type="text"
                 name="developer"
                 value={formData.developer}
@@ -341,6 +347,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               Postcode:
               <input
+                className={styles["form-input"]}
                 type="text"
                 name="postcode"
                 value={formData.postcode}
@@ -354,6 +361,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               Area:
               <input
+                className={styles["form-input"]}
                 type="text"
                 name="area"
                 value={formData.area}
@@ -367,6 +375,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               Zone:
               <input
+                className={styles["form-input"]}
                 type="number"
                 name="zone"
                 value={formData.zone}
@@ -382,6 +391,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               Cardinal Location:
               <select
+                className={styles["form-input"]}
                 name="cardinalLocation"
                 value={formData.cardinalLocation}
                 onChange={handleChange}
@@ -410,8 +420,9 @@ function DevelopmentForm({ onSubmit, id = null }) {
 
           <div>
             <label>
-              fee:
+              Fee:
               <input
+                className={styles["form-input"]}
                 type="number"
                 name="fee"
                 value={formData.fee}
@@ -428,6 +439,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               Contact Email:
               <input
+                className={styles["form-input"]}
                 type="email"
                 name="contactEmail"
                 value={formData.contactEmail}
@@ -441,6 +453,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               Completion Year:
               <select
+                className={styles["form-input"]}
                 name="completionYear"
                 value={formData.completionYear}
                 onChange={handleChange}
@@ -463,6 +476,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                   <label>
                     Completion Quarter:
                     <select
+                      className={styles["form-input"]}
                       name="completionQuarter"
                       value={formData.completionQuarter}
                       onChange={handleChange}
@@ -483,6 +497,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               Nearest Station:
               <input
+                className={styles["form-input"]}
                 type="text"
                 name="nearestStation"
                 value={formData.nearestStation}
@@ -495,6 +510,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               Nearest Station Distance (minutes):
               <input
+                className={styles["form-input"]}
                 type="number"
                 name="nearestStationDistance"
                 value={formData.nearestStationDistance}
@@ -509,6 +525,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               Email Copy (Key Features):
               <input
+                className={styles["form-input"]}
                 type="text"
                 name="emailCopy"
                 value={formData.emailCopy}
@@ -538,6 +555,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                     <label>
                       {bedtypeObject[bedType]} Price From:
                       <input
+                        className={styles["form-input"]}
                         type="number"
                         name={`${bedType}.priceFrom`}
                         value={formData.availability[bedType].priceFrom}
@@ -556,11 +574,16 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               New Brochure:
               <input
+                className={styles["form-input"]}
                 type="text"
                 value={newBrochure}
                 onChange={(e) => setNewBrochure(e.target.value)}
               />
-              <button type="button" onClick={handleAddBrochure}>
+              <button
+                type="button"
+                onClick={handleAddBrochure}
+                className={styles["form-button"]}
+              >
                 Add Brochure
               </button>
             </label>
@@ -570,12 +593,17 @@ function DevelopmentForm({ onSubmit, id = null }) {
             <label>
               New Price List:
               <input
+                className={styles["form-input"]}
                 type="text"
                 value={newPriceList}
                 onChange={(e) => setNewPriceList(e.target.value)}
               />
             </label>
-            <button type="button" onClick={handleAddPriceList}>
+            <button
+              type="button"
+              onClick={handleAddPriceList}
+              className={styles["form-button"]}
+            >
               Add Price List
             </button>
           </div>
@@ -586,6 +614,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
               {formData.brochures.map((brochure, index) => (
                 <div key={index}>
                   <input
+                    className={styles["form-input"]}
                     type="text"
                     value={brochure}
                     onChange={(e) =>
@@ -593,6 +622,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                     }
                   />
                   <button
+                    className={styles["form-button"]}
                     type="button"
                     onClick={() => handleRemoveBrochure(index)}
                   >
@@ -609,6 +639,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
               {formData.priceLists.map((priceList, index) => (
                 <div key={index}>
                   <input
+                    className={styles["form-input"]}
                     type="text"
                     value={priceList.url || ""}
                     onChange={(e) =>
@@ -619,6 +650,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                   <button
                     type="button"
                     onClick={() => handleRemovePriceList(index)}
+                    className={styles["form-button"]}
                   >
                     Remove
                   </button>
@@ -647,6 +679,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                 <label>
                   Copy 1:
                   <input
+                    className={styles["form-input"]}
                     type="text"
                     name="copy1"
                     value={formData.copy1}
@@ -661,6 +694,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                 <label>
                   Copy 2:
                   <input
+                    className={styles["form-input"]}
                     type="text"
                     name="copy2"
                     value={formData.copy2}
@@ -675,11 +709,16 @@ function DevelopmentForm({ onSubmit, id = null }) {
                 <label>
                   New Feature:
                   <input
+                    className={styles["form-input"]}
                     type="text"
                     value={newFeature}
                     onChange={(e) => setNewFeature(e.target.value)}
                   />
-                  <button type="button" onClick={handleAddFeature}>
+                  <button
+                    className={styles["form-button"]}
+                    type="button"
+                    onClick={handleAddFeature}
+                  >
                     Add Feature
                   </button>
                 </label>
@@ -689,11 +728,16 @@ function DevelopmentForm({ onSubmit, id = null }) {
                 <label>
                   New Amenity:
                   <input
+                    className={styles["form-input"]}
                     type="text"
                     value={newAmenity}
                     onChange={(e) => setNewAmenity(e.target.value)}
                   />
-                  <button type="button" onClick={handleAddAmenity}>
+                  <button
+                    type="button"
+                    onClick={handleAddAmenity}
+                    className={styles["form-button"]}
+                  >
                     Add Amenity
                   </button>
                 </label>
@@ -703,11 +747,16 @@ function DevelopmentForm({ onSubmit, id = null }) {
                 <label>
                   New Image:
                   <input
+                    className={styles["form-input"]}
                     type="text"
                     value={newImage}
                     onChange={(e) => setNewImage(e.target.value)}
                   />
-                  <button type="button" onClick={handleAddImage}>
+                  <button
+                    type="button"
+                    onClick={handleAddImage}
+                    className={styles["form-button"]}
+                  >
                     Add Image
                   </button>
                 </label>
@@ -719,6 +768,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                   {formData.amenities.map((amenity, index) => (
                     <div key={index}>
                       <input
+                        className={styles["form-input"]}
                         type="text"
                         value={amenity}
                         onChange={(e) =>
@@ -728,6 +778,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                       <button
                         type="button"
                         onClick={() => handleRemoveAmenity(index)}
+                        className={styles["form-button"]}
                       >
                         Remove
                       </button>
@@ -742,6 +793,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                   {formData.features.map((feature, index) => (
                     <div key={index}>
                       <input
+                        className={styles["form-input"]}
                         type="text"
                         value={feature}
                         onChange={(e) =>
@@ -751,6 +803,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                       <button
                         type="button"
                         onClick={() => handleRemoveFeature(index)}
+                        className={styles["form-button"]}
                       >
                         Remove
                       </button>
@@ -765,6 +818,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                   {formData.images.map((image, index) => (
                     <div key={index}>
                       <input
+                        className={styles["form-input"]}
                         type="text"
                         value={image}
                         onChange={(e) =>
@@ -774,6 +828,7 @@ function DevelopmentForm({ onSubmit, id = null }) {
                       <button
                         type="button"
                         onClick={() => handleRemoveImage(index)}
+                        className={styles["form-button"]}
                       >
                         Remove
                       </button>
@@ -784,8 +839,9 @@ function DevelopmentForm({ onSubmit, id = null }) {
             </>
           )}
 
-          <button type="submit">Submit</button>
-          <button onClick={clickTest}>show form data</button>
+          <button type="submit" className={styles["form-button"]}>
+            Submit
+          </button>
         </form>
       </div>
     </div>

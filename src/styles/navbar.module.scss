@@ -23,7 +23,7 @@
         transition: background-color 0.3s ease, color 0.3s ease;
 
         &:hover {
-          background-color: $yase-brown;
+          background-color: lighten($color: $yase-brown, $amount: 20%);
           border-radius: 5px;
         }
       }
