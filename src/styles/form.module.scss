@@ -88,6 +88,14 @@ input[type="checkbox"] {
   margin: 5px 0;
 }
 
+.button-add-development {
+}
+
+.button-add-development:hover {
+  background-color: $yase-purple;
+  color: #fff;
+}
+
 .form-button:hover {
   background-color: darken($yase-purple, 10%);
 }

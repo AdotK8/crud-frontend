@@ -1,0 +1,18 @@
+@import "./colours.scss";
+
+strong.map-name {
+  color: $yase-brown;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: underline;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+
+  &:hover {
+    text-decoration: none;
+    transform: scale(1.05);
+  }
+  &:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+  }
+}

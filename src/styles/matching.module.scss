@@ -1,0 +1,185 @@
+@import "./colours.scss";
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 20px;
+  gap: 20px;
+
+  > .filterSection,
+  .matchesSection,
+  .selectionSection {
+    height: 90%;
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    > h2 {
+      font-size: 1.75rem;
+      color: $yase-brown;
+      margin-bottom: 15px;
+    }
+  }
+
+  > .filterSection {
+    background-color: #f9f9f9;
+
+    > form > .filterGroup {
+      margin-bottom: 15px;
+
+      > label {
+        display: block;
+        margin-bottom: 5px;
+      }
+    }
+  }
+  > .matchesSection {
+    background-color: #fff;
+    overflow-y: auto;
+  }
+
+  > .selectionSection {
+    background-color: #f9f9f9;
+    overflow-y: auto;
+  }
+}
+
+select,
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+  button:not(.addButton):not(.removeButton):hover {
+    background-color: darken($yase-purple, 20%);
+  }
+}
+
+.submitButton {
+  background-color: $yase-purple;
+  color: white;
+}
+
+.addButton {
+  background-color: #28a745;
+  color: white;
+  border-radius: 100px;
+  &:hover {
+    background-color: darken(#28a745, 20%);
+  }
+}
+
+.removeButton {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  &:hover {
+    background-color: darken(#ff4d4d, 30%);
+  }
+}
+
+.matchesList {
+  list-style-type: none;
+  padding: 0;
+  > .matchItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column; // Stack content vertically
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  position: relative;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  box-sizing: border-box;
+  transition: box-shadow 0.3s ease;
+
+  > .cardContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-right: 40px;
+    > .cardTitle {
+      font-size: 1.25rem;
+    }
+    > .bedInfo {
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+    > .priceInfo {
+      font-size: 0.875rem;
+      color: #666;
+      margin-top: 5px;
+    }
+    > .bedInfo,
+    .priceInfo {
+      margin: 5px 0;
+    }
+  }
+}
+
+.emailSection {
+  margin-top: 20px;
+
+  > .sendButton {
+    background-color: $yase-purple;
+    color: white;
+    margin-top: 10px;
+    &:hover {
+      background-color: darken($color: $yase-purple, $amount: 10%);
+    }
+  }
+}
+
+.error {
+  font-size: 1.5rem;
+  color: red;
+  margin-top: 5px;
+  text-align: center;
+  width: 100%;
+}
+
+.sendButton,
+.submitButton {
+  &:hover {
+    background-color: darken($color: $yase-purple, $amount: 10%);
+  }
+}

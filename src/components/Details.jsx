@@ -127,19 +127,11 @@ export default function DevelopmentDetail() {
             <div>
               <strong>Parking:</strong> {development.parking ? "Yes" : "No"}
             </div>
-            <div>
-              <strong>Landing Page:</strong>{" "}
-              {development.landingPage ? "Yes" : "No"}
-            </div>
+
             <div>
               <strong>Postcode:</strong> {development.postcode}
             </div>
-            <div>
-              <strong>Latitude:</strong> {development.coords[0].latitude}
-            </div>
-            <div>
-              <strong>Longitude:</strong> {development.coords[0].longitude}
-            </div>
+
             <div>
               <strong>Nearest Station:</strong> {development.nearestStation}
             </div>

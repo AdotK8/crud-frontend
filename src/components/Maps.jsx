@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "../styles/maps.module.scss";
 import {
   APIProvider,
   Map,
@@ -10,8 +11,8 @@ import { fetchMappingInfo } from "../utils/api";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 const containerStyle = {
-  width: "90%",
-  height: "80vh",
+  width: "100%",
+  height: "95vh",
 };
 
 // Central London long/lat
@@ -103,6 +104,7 @@ function MapPage() {
             onCloseClick={() => setSelectedDevelopment(null)}
           >
             <strong
+              className={styles["map-name"]}
               onClick={() =>
                 developmentViewClickHandler(selectedDevelopment._id)
               }
