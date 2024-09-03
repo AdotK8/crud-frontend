@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import DevelopmentForm from "./Form";
 import styles from "../styles/details.module.scss";
 import {
@@ -7,7 +7,6 @@ import {
   fetchOneDevelopment,
   deleteDevelopment,
 } from "../utils/api";
-import { useNavigate } from "react-router-dom";
 
 export default function DevelopmentDetail() {
   const { id } = useParams();
@@ -43,10 +42,6 @@ export default function DevelopmentDetail() {
     setErrorMessage("");
   };
 
-  const formatNumber = (number) => {
-    return new Intl.NumberFormat().format(number);
-  };
-
   const handleDeleteClick = () => {
     setIsDeleteModalOpen(true);
   };
@@ -57,7 +52,7 @@ export default function DevelopmentDetail() {
 
   const handleConfirmDelete = async () => {
     try {
-      const result = await deleteDevelopment(id);
+      await deleteDevelopment(id);
       setIsModalOpen(false);
       setErrorMessage("");
       navigate(`/`);
@@ -82,8 +77,7 @@ export default function DevelopmentDetail() {
     const { _id, ...dataToSend } = formData;
 
     try {
-      const result = await editDevelopment({ _id, ...dataToSend });
-      console.log(result);
+      await editDevelopment({ _id, ...dataToSend });
       refreshData();
       setIsModalOpen(false);
       setErrorMessage("");
@@ -93,189 +87,301 @@ export default function DevelopmentDetail() {
     }
   };
 
+  const formatNumber = (number) => {
+    return new Intl.NumberFormat().format(number);
+  };
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className={styles.loading}>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className={styles.error}>Error: {error}</div>;
   }
 
   if (!development) {
-    return <div>No development found</div>;
+    return <div className={styles.error}>No development found</div>;
   }
 
   return (
     <>
-      <div>
-        <h1>{development.name}</h1>
-        <p>Zone: {development.zone}</p>
-        <p>Parking: {development.parking ? "Yes" : "No"}</p>
-        <p>Landing Page: {development.landingPage ? "Yes" : "No"}</p>
-        <p>Copy 1: {development.copy1 || "N/A"}</p>
-        <p>Copy 2: {development.copy2 || "N/A"}</p>
-        <p>Features: {development.features?.join(", ") || "N/A"}</p>
-        <p>Amenities: {development.amenities?.join(", ") || "N/A"}</p>
-        <p>Nearest Station: {development.nearestStation || "N/A"}</p>
-        <p>
-          Nearest Station Distance: {development.nearestStationDistance} meters
-        </p>
-        <p>
-          Images:{" "}
-          {development.images?.map((img, idx) => (
-            <img
-              key={idx}
-              src={img}
-              alt={`Image ${idx + 1}`}
-              style={{ maxWidth: "200px", margin: "5px" }}
-            />
-          )) || "N/A"}
-        </p>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1>{development.name}</h1>
+          <div className={styles.actions}>
+            <button className={styles.editButton} onClick={handleEditClick}>
+              Edit
+            </button>
+            <button className={styles.deleteButton} onClick={handleDeleteClick}>
+              Delete
+            </button>
+          </div>
+        </div>
 
-        <p>
-          Brochures:{" "}
-          {development.brochures?.length > 0
-            ? development.brochures.map((brochure, idx) => (
-                <a
-                  key={idx}
-                  href={brochure}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ display: "block", margin: "5px 0" }}
-                >
-                  Brochure {idx + 1}
-                </a>
-              ))
-            : "N/A"}
-        </p>
+        <div className={styles.section}>
+          <h2>General Information</h2>
+          <div className={styles.infoGrid}>
+            <div>
+              <strong>Zone:</strong> {development.zone}
+            </div>
+            <div>
+              <strong>Parking:</strong> {development.parking ? "Yes" : "No"}
+            </div>
+            <div>
+              <strong>Landing Page:</strong>{" "}
+              {development.landingPage ? "Yes" : "No"}
+            </div>
+            <div>
+              <strong>Postcode:</strong> {development.postcode}
+            </div>
+            <div>
+              <strong>Latitude:</strong> {development.coords[0].latitude}
+            </div>
+            <div>
+              <strong>Longitude:</strong> {development.coords[0].longitude}
+            </div>
+            <div>
+              <strong>Nearest Station:</strong> {development.nearestStation}
+            </div>
+            <div>
+              <strong>Nearest Station Distance:</strong>{" "}
+              {development.nearestStationDistance} km
+            </div>
+            <div>
+              <strong>Area:</strong> {development.area}
+            </div>
+            <div>
+              <strong>Developer:</strong> {development.developer}
+            </div>
+            <div>
+              <strong>Cardinal Location:</strong> {development.cardinalLocation}
+            </div>
+            <div>
+              <strong>Fee:</strong> {development.fee}%
+            </div>
+            <div>
+              <strong>Contact Email:</strong> {development.contactEmail}
+            </div>
+            <div>
+              <strong>Completion Quarter:</strong>{" "}
+              {development.completionQuarter}
+            </div>
+            <div>
+              <strong>Completion Year:</strong> {development.completionYear}
+            </div>
+            <div>
+              <strong>Email Copy (Key Features):</strong>{" "}
+              {development.emailCopy}
+            </div>
+            <div>
+              <strong>Created At:</strong>{" "}
+              {new Date(development.createdAt).toLocaleDateString()}
+            </div>
+          </div>
+        </div>
 
-        <p>
-          Price Lists:{" "}
-          {development.priceLists?.length > 0
-            ? development.priceLists.map((pl, idx) => (
-                <a
-                  key={idx}
-                  href={pl.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ display: "block", margin: "5px 0" }}
-                >
-                  Price List {idx + 1}
-                </a>
-              ))
-            : "N/A"}
-        </p>
+        <div className={styles.section}>
+          <h2>Media</h2>
+          <div className={styles.mediaSection}>
+            <div>
+              <strong>Images:</strong>
+              <div className={styles.imageGallery}>
+                {development.images?.length > 0
+                  ? development.images.map((img, idx) => (
+                      <img
+                        key={idx}
+                        src={img}
+                        alt={`Image ${idx + 1}`}
+                        className={styles.image}
+                      />
+                    ))
+                  : "N/A"}
+              </div>
+            </div>
 
-        <p>
-          Price Lists Last Updated:{" "}
-          {new Date(development.priceListsLastUpdated).toLocaleDateString()}
-        </p>
+            <div>
+              <strong>Brochures:</strong>
+              <div className={styles.links}>
+                {development.brochures?.length > 0
+                  ? development.brochures.map((brochure, idx) => (
+                      <a
+                        key={idx}
+                        href={brochure}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.link}
+                      >
+                        Brochure {idx + 1}
+                      </a>
+                    ))
+                  : "N/A"}
+              </div>
+            </div>
 
-        <h2>Availability</h2>
-        <p>
-          Studio Availability:{" "}
-          {development.availability?.zeroBed?.available ? "Yes" : "No"}
-        </p>
-        <p>
-          Studio Price From:
-          {development.availability?.zeroBed?.priceFrom
-            ? "£" + formatNumber(development.availability.zeroBed.priceFrom)
-            : "N/A"}
-        </p>
-        <p>
-          1 Bed Availability:{" "}
-          {development.availability?.oneBed?.available ? "Yes" : "No"}
-        </p>
-        <p>
-          1 Bed Price From:{" "}
-          {development.availability?.oneBed?.priceFrom
-            ? "£" + formatNumber(development.availability.oneBed.priceFrom)
-            : "N/A"}
-        </p>
-        <p>
-          2 Bed Availability:{" "}
-          {development.availability?.twoBed?.available ? "Yes" : "No"}
-        </p>
-        <p>
-          2 Bed Price From:{" "}
-          {development.availability?.twoBed?.priceFrom
-            ? "£" + formatNumber(development.availability.twoBed.priceFrom)
-            : "N/A"}
-        </p>
-        <p>
-          3 Bed Availability:{" "}
-          {development.availability?.threeBed?.available ? "Yes" : "No"}
-        </p>
-        <p>
-          3 Bed Price From:{" "}
-          {development.availability?.threeBed?.priceFrom
-            ? "£" + formatNumber(development.availability.threeBed.priceFrom)
-            : "N/A"}
-        </p>
-        <p>
-          4+ Bed Availability:{" "}
-          {development.availability?.fourPlusBed?.available ? "Yes" : "No"}
-        </p>
-        <p>
-          4+ Bed Price From:{" "}
-          {development.availability?.fourPlusBed?.priceFrom
-            ? "£" + formatNumber(development.availability.fourPlusBed.priceFrom)
-            : "N/A"}
-        </p>
+            <div>
+              <strong>Price Lists:</strong>
+              <div className={styles.links}>
+                {development.priceLists?.length > 0
+                  ? development.priceLists.map((pl, idx) => (
+                      <a
+                        key={idx}
+                        href={pl.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.link}
+                      >
+                        Price List {idx + 1}
+                      </a>
+                    ))
+                  : "N/A"}
+              </div>
+            </div>
 
-        <p>
-          Availability Last Updated:{" "}
-          {new Date(development.availability.lastUpdated).toLocaleDateString()}
-        </p>
+            <div>
+              <strong>Price Lists Last Updated:</strong>{" "}
+              {new Date(development.priceListsLastUpdated).toLocaleDateString()}
+            </div>
+          </div>
+        </div>
 
-        <p>Postcode: {development.postcode}</p>
-        <p>latitude: {development.coords[0].latitude}</p>
-        <p>longitude: {development.coords[0].longitude}</p>
-        <p>Area: {development.area}</p>
-        <p>Developer: {development.developer}</p>
-        <p>Cardinal Location: {development.cardinalLocation}</p>
-        <p>Fee: {development.fee}%</p>
-        <p>Contact Email: {development.contactEmail}</p>
-        <p>Completion Quarter: {development.completionQuarter}</p>
-        <p>Completion Year: {development.completionYear}</p>
-        <p>Email Copy (Key Features): {development.emailCopy}</p>
-        <p>
-          Created At: {new Date(development.createdAt).toLocaleDateString()}
-        </p>
+        <div className={styles.section}>
+          <h2>Availability</h2>
+          <div className={styles.infoGrid}>
+            {development.availability && (
+              <>
+                <div>
+                  <strong>Studio Availability:</strong>{" "}
+                  {development.availability.zeroBed?.available ? "Yes" : "No"}
+                </div>
+                <div>
+                  <strong>Studio Price From:</strong>{" "}
+                  {development.availability.zeroBed?.priceFrom
+                    ? "£" +
+                      formatNumber(development.availability.zeroBed.priceFrom)
+                    : "N/A"}
+                </div>
+                <div>
+                  <strong>1 Bed Availability:</strong>{" "}
+                  {development.availability.oneBed?.available ? "Yes" : "No"}
+                </div>
+                <div>
+                  <strong>1 Bed Price From:</strong>{" "}
+                  {development.availability.oneBed?.priceFrom
+                    ? "£" +
+                      formatNumber(development.availability.oneBed.priceFrom)
+                    : "N/A"}
+                </div>
+                <div>
+                  <strong>2 Bed Availability:</strong>{" "}
+                  {development.availability.twoBed?.available ? "Yes" : "No"}
+                </div>
+                <div>
+                  <strong>2 Bed Price From:</strong>{" "}
+                  {development.availability.twoBed?.priceFrom
+                    ? "£" +
+                      formatNumber(development.availability.twoBed.priceFrom)
+                    : "N/A"}
+                </div>
+                <div>
+                  <strong>3 Bed Availability:</strong>{" "}
+                  {development.availability.threeBed?.available ? "Yes" : "No"}
+                </div>
+                <div>
+                  <strong>3 Bed Price From:</strong>{" "}
+                  {development.availability.threeBed?.priceFrom
+                    ? "£" +
+                      formatNumber(development.availability.threeBed.priceFrom)
+                    : "N/A"}
+                </div>
+                <div>
+                  <strong>4+ Bed Availability:</strong>{" "}
+                  {development.availability.fourPlusBed?.available
+                    ? "Yes"
+                    : "No"}
+                </div>
+                <div>
+                  <strong>4+ Bed Price From:</strong>{" "}
+                  {development.availability.fourPlusBed?.priceFrom
+                    ? "£" +
+                      formatNumber(
+                        development.availability.fourPlusBed.priceFrom
+                      )
+                    : "N/A"}
+                </div>
+                <div>
+                  <strong>Availability Last Updated:</strong>{" "}
+                  {new Date(
+                    development.availability.lastUpdated
+                  ).toLocaleDateString()}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
 
-        <button onClick={handleEditClick}>Edit Development</button>
+        <div className={styles.section}>
+          <h2>Website Information</h2>
+          <div className={styles.infoGrid}>
+            <div>
+              <strong>Copy 1:</strong> {development.copy1 || "N/A"}
+            </div>
+            <div>
+              <strong>Copy 2:</strong> {development.copy2 || "N/A"}
+            </div>
+            <div>
+              <strong>Amenities:</strong>{" "}
+              {development.amenities && development.amenities.length > 0
+                ? development.amenities.join(", ")
+                : "N/A"}
+            </div>
+            <div>
+              <strong>Features:</strong>{" "}
+              {development.features && development.features.length > 0
+                ? development.features.join(", ")
+                : "N/A"}
+            </div>
+
+            <div>
+              <strong>Landing Page:</strong>{" "}
+              {development.landingPage ? "Yes" : "No"}
+            </div>
+          </div>
+        </div>
+
         {isModalOpen && (
-          <div className={styles["modal"]}>
-            <div className={styles["modal-content"]}>
+          <div className={styles.modal}>
+            <div className={styles.modalContent}>
               <DevelopmentForm
                 onSubmit={handleFormSubmit}
                 id={development._id}
                 handleCloseModal={handleCloseModal}
               />
               {errorMessage && (
-                <div
-                  className={styles["error-message"]}
-                  style={{ color: "red" }}
-                >
-                  Error creating development
-                </div>
+                <div className={styles.errorMessage}>Error: {errorMessage}</div>
               )}
             </div>
           </div>
         )}
-        <button onClick={handleDeleteClick}>Delete Development</button>
+
         {isDeleteModalOpen && (
-          <div className={styles["modal"]}>
-            <div className={styles["modal-content"]}>
-              <span
-                className={styles["close"]}
-                onClick={handleCloseDeleteModal}
-              >
+          <div className={styles.modal}>
+            <div className={styles.modalContent}>
+              <span className={styles.close} onClick={handleCloseDeleteModal}>
                 &times;
               </span>
               <div>Are you sure you want to delete?</div>
-              <button onClick={handleConfirmDelete}>YES</button>
-              <button onClick={handleCloseDeleteModal}>NO</button>
+              <button
+                className={styles.confirmButton}
+                onClick={handleConfirmDelete}
+              >
+                YES
+              </button>
+              <button
+                className={styles.cancelButton}
+                onClick={handleCloseDeleteModal}
+              >
+                NO
+              </button>
             </div>
           </div>
         )}

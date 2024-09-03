@@ -1,5 +1,9 @@
 @import "./colours.scss";
 
+body {
+  background-color: lighten($color: $yase-yellow, $amount: 5%);
+}
+
 .table-container {
   max-width: 100%;
   margin: 20px auto;
@@ -26,7 +30,7 @@
       thead {
         width: 100%;
         background-color: $yase-purple;
-        color: #fff;
+        color: $yase-brown;
         position: sticky;
         top: 0;
         z-index: 10;
@@ -211,7 +215,7 @@
 
 .button-add-development {
   padding: 10px 20px;
-  background-color: transparent;
+  background-color: #f9f9f9;
   color: $yase-purple;
   border: 2px solid $yase-purple;
   border-radius: 5px;
