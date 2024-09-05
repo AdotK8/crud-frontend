@@ -9,7 +9,7 @@ import {
 } from "@vis.gl/react-google-maps";
 import { fetchMappingInfo } from "../utils/api";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import yaseIcon from "../assets/yase-logo.png";
+import yaseIcon from "../assets/yase-map-icon.png";
 
 const containerStyle = {
   width: "100%",
@@ -47,8 +47,6 @@ function Markers({ developments, onMarkerClick }) {
       });
 
       new MarkerClusterer({ map, markers });
-
-      console.log(`Created ${markers.length} markers.`);
     }
   }, [map, developments]);
 

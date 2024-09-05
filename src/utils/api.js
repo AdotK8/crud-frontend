@@ -2,7 +2,7 @@ const API_BASE_URL = "http://localhost:3000/api/developments";
 
 export const sendMatchEmail = async (selection, email, name) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/send-email`, {
+    const response = await fetch(`${API_BASE_URL}/send-match-email`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

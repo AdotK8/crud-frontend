@@ -137,7 +137,7 @@ export default function Matching({ data }) {
       <div className={styles.container}>
         {/* Filter Section */}
         <div className={styles.filterSection}>
-          <h2>Filters</h2>
+          <h2>Requirements</h2>
           <form onSubmit={handleSubmit}>
             {/* Parking Filter */}
             <div className={styles.filterGroup}>
