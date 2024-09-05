@@ -58,10 +58,7 @@ function AppContent() {
             />
           }
         />
-        <Route
-          path="/matching"
-          element={<Matching data={data} setData={setData} />}
-        />
+        <Route path="/matching" element={<Matching data={data} />} />
         <Route path="/development/:id" element={<DevelopmentDetail />} />
 
         <Route path="/map" element={<MapPage />} />

@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import styles from "../styles/matching.module.scss";
 import { sendMatchEmail } from "../utils/api";
 import { users } from "../utils/users";
-import placeholderImage from "../assets/placeholder.jpg";
 
-export default function Matching({ data, setData }) {
+export default function Matching({ data }) {
   const [filters, setFilters] = useState({
     parking: "All",
     zone: "All",
@@ -134,7 +133,7 @@ export default function Matching({ data, setData }) {
 
   return (
     <>
-      {error && <div className={styles.error}>{error}</div>}
+      <div className={styles.error}>{error}</div>
       <div className={styles.container}>
         {/* Filter Section */}
         <div className={styles.filterSection}>
@@ -249,9 +248,11 @@ export default function Matching({ data, setData }) {
           <h2>Matches</h2>
           {matches.length > 0 ? (
             <ul className={styles.matchesList}>
-              {matches.map((match, index) => (
-                <li key={index} className={styles.matchItem}>
-                  <div className={styles.matchName}>{match.name}</div>
+              {matches.map((match) => (
+                <li key={match._id} className={styles.matchItem}>
+                  <div className={styles.matchName}>
+                    {match.name} - ({match.area})
+                  </div>
                   <button
                     onClick={() => addToSelection(match)}
                     className={styles.addButton}
@@ -271,8 +272,8 @@ export default function Matching({ data, setData }) {
           <h2>Selection</h2>
           {selection.length > 0 ? (
             <div className={styles.cardContainer}>
-              {selection.map((development, index) => (
-                <div key={index} className={styles.card}>
+              {selection.map((development) => (
+                <div key={development._id} className={styles.card}>
                   <div className={styles.cardContent}>
                     <h3 className={styles.cardTitle}>{development.name}</h3>
                     {development.availability &&
@@ -335,11 +336,11 @@ export default function Matching({ data, setData }) {
                 onChange={(e) => setSelectedUser(e.target.value)}
               >
                 <option value="">Select a user</option>
-                {users.map((user, index) => {
+                {users.map((user) => {
                   const userName = Object.keys(user)[0];
                   const userEmail = user[userName];
                   return (
-                    <option key={index} value={userEmail}>
+                    <option key={userName} value={userEmail}>
                       {userName}
                     </option>
                   );
