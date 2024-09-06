@@ -128,7 +128,11 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 {/* Cardinal Filter */}
                 <th>
                   Cardinal Location
-                  <div className={styles["filters"]}>
+                  <div
+                    className={`${styles["filters"]} ${
+                      filters.cardinal === "All" ? styles["unselected"] : ""
+                    }`}
+                  >
                     <select
                       id="cardinal-filter"
                       name="cardinal"
@@ -147,7 +151,11 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 {/* Zone Filter */}
                 <th>
                   Zone
-                  <div className={styles["filters"]}>
+                  <div
+                    className={`${styles["filters"]} ${
+                      filters.zone === "All" ? styles["unselected"] : ""
+                    }`}
+                  >
                     <select
                       id="zone-filter"
                       name="zone"
@@ -168,7 +176,13 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 <th>Developer</th>
                 <th>
                   Completion Year
-                  <div className={styles["filters"]}>
+                  <div
+                    className={`${styles["filters"]} ${
+                      filters.completionYear === "All"
+                        ? styles["unselected"]
+                        : ""
+                    }`}
+                  >
                     <select
                       id="completion-filter"
                       name="completionYear"
@@ -187,7 +201,11 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 {/* Parking Filter */}
                 <th>
                   Parking
-                  <div className={styles["filters"]}>
+                  <div
+                    className={`${styles["filters"]} ${
+                      filters.parking === "All" ? styles["unselected"] : ""
+                    }`}
+                  >
                     <select
                       id="parking-filter"
                       name="parking"
@@ -202,7 +220,11 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 {/* Studio bed Filter */}
                 <th>
                   Studio Availability
-                  <div className={styles["filters"]}>
+                  <div
+                    className={`${styles["filters"]} ${
+                      filters.zeroBed === "All" ? styles["unselected"] : ""
+                    }`}
+                  >
                     <select
                       id="availability-filter"
                       name="zeroBed"
@@ -217,7 +239,11 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 {/* 1 bed Filter */}
                 <th>
                   1 Bed Availability
-                  <div className={styles["filters"]}>
+                  <div
+                    className={`${styles["filters"]} ${
+                      filters.oneBed === "All" ? styles["unselected"] : ""
+                    }`}
+                  >
                     <select
                       id="availability-filter"
                       name="oneBed"
@@ -232,7 +258,11 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 {/* 2 bed Filter */}
                 <th>
                   2 Bed Availability
-                  <div className={styles["filters"]}>
+                  <div
+                    className={`${styles["filters"]} ${
+                      filters.twoBed === "All" ? styles["unselected"] : ""
+                    }`}
+                  >
                     <select
                       id="availability-filter"
                       name="twoBed"
@@ -247,7 +277,11 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 {/* 3 bed Filter */}
                 <th>
                   3 Bed Availability
-                  <div className={styles["filters"]}>
+                  <div
+                    className={`${styles["filters"]} ${
+                      filters.threeBed === "All" ? styles["unselected"] : ""
+                    }`}
+                  >
                     <select
                       id="availability-filter"
                       name="threeBed"
@@ -262,7 +296,11 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 {/* 4 bed Filter */}
                 <th>
                   4+ Bed Availability
-                  <div className={styles["filters"]}>
+                  <div
+                    className={`${styles["filters"]} ${
+                      filters.fourBed === "All" ? styles["unselected"] : ""
+                    }`}
+                  >
                     <select
                       id="availability-filter"
                       name="fourBed"
