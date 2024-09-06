@@ -4,6 +4,51 @@ body {
   background-color: #e8e8e8;
 }
 
+.page-container {
+  height: 93vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 10px auto;
+  position: relative;
+
+  > .search-icon {
+    position: absolute;
+    left: 15px;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+  }
+
+  > .search-bar {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border-radius: 5px;
+    border: 2px solid $yase-purple;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    color: $yase-brown;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+
+    &:focus {
+      outline: none;
+      border-color: darken($yase-purple, 10%);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    &::placeholder {
+      color: rgb(145, 145, 145);
+    }
+  }
+}
+
 .table-container {
   max-width: 100%;
   margin: 20px auto;
@@ -11,13 +56,13 @@ body {
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-height: 90vh;
+  max-height: 80vh;
   overflow: hidden;
 
   .table-wrapper {
     overflow: auto;
     width: 100%;
-    max-height: 75vh;
+    max-height: 65vh;
     position: relative;
     border-radius: 5px;
 

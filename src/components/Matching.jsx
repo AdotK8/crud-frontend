@@ -322,7 +322,7 @@ export default function Matching({ data }) {
               ))}
             </div>
           ) : (
-            <p>No selections made</p>
+            <p>Selection is empty</p>
           )}
           {userSelectError && (
             <div className={styles.error}>{userSelectError}</div>

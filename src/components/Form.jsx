@@ -258,6 +258,7 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let errorMessage = "";
+    console.log(e);
 
     const updatedAvailability = { ...formData.availability };
     if (!formData.availability.zeroBed.available) {

@@ -3,9 +3,12 @@ import styles from "../styles/table.module.scss";
 import DevelopmentForm from "./Form";
 import { createDevelopment, fetchAllDevelopments } from "../utils/api";
 import { useNavigate } from "react-router-dom";
+import magnifyIcon from "../assets/magnify.svg";
 
 export default function DevelopmentsTable({ data, setData, setLoading }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [filters, setFilters] = useState({
     parking: "All",
@@ -19,15 +22,9 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
     completionYear: "All",
   });
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     refreshData();
   }, [filters]); // Re-fetch when filters change
-
-  const formatNumber = (number) => {
-    return new Intl.NumberFormat().format(number);
-  };
 
   const handleAddClick = () => {
     setIsModalOpen(true);
@@ -76,10 +73,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
     }
   };
 
-  const developmentViewClickHandler = (id) => {
-    navigate(`/development/${id}`);
-  };
-
   const handleFormSubmit = async (formData) => {
     try {
       await createDevelopment(formData);
@@ -98,8 +91,32 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
     });
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+
+    if (e.target.value.length > 0) {
+      const searchString = e.target.value.toLowerCase();
+      const filteredData = data.filter((dev) => {
+        return dev.name.toLowerCase().startsWith(searchString);
+      });
+      console.log("filtered data", filteredData);
+      setSearchResults(filteredData);
+    } else {
+      setSearchResults([]);
+    }
+  };
+
   return (
-    <>
+    <div className={styles["page-container"]}>
+      <div className={styles["search-container"]}>
+        <img src={magnifyIcon} alt="Search" className={styles["search-icon"]} />
+        <input
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className={styles["search-bar"]}
+          placeholder="Search for development name"
+        />
+      </div>
       <div className={styles["table-container"]}>
         <div className={styles["table-wrapper"]}>
           <table>
@@ -263,60 +280,11 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
             </thead>
 
             {/* TABLE BODY */}
-            <tbody>
-              {data.map((development) => (
-                <tr key={development._id}>
-                  <td
-                    className="dev-name"
-                    onClick={() => developmentViewClickHandler(development._id)}
-                  >
-                    {<span>{development.name}</span>}
-                  </td>
-                  <td>{development.area}</td>
-                  <td>{development.cardinalLocation}</td>
-                  <td>{development.zone}</td>
-                  <td>{development.developer}</td>
-                  <td>{development.completionYear}</td>
-                  <td>{development.parking ? "Yes" : "No"}</td>
-                  <td>
-                    {development.availability?.zeroBed?.available
-                      ? "£" +
-                        formatNumber(development.availability.zeroBed.priceFrom)
-                      : "No"}
-                  </td>
-                  <td>
-                    {development.availability?.oneBed?.available
-                      ? "£" +
-                        formatNumber(development.availability.oneBed.priceFrom)
-                      : "No"}
-                  </td>
-                  <td>
-                    {development.availability?.twoBed?.available
-                      ? "£" +
-                        formatNumber(development.availability.twoBed.priceFrom)
-                      : "No"}
-                  </td>
-                  <td>
-                    {development.availability?.threeBed?.available
-                      ? "£" +
-                        formatNumber(
-                          development.availability.threeBed.priceFrom
-                        )
-                      : "No"}
-                  </td>
-                  <td>
-                    {development.availability?.fourPlusBed?.available
-                      ? "£" +
-                        formatNumber(
-                          development.availability.fourPlusBed.priceFrom
-                        )
-                      : "No"}
-                  </td>
-                  <td>{development.fee + "%"}</td>
-                  <td>{development.contactEmail}</td>
-                </tr>
-              ))}
-            </tbody>
+            {searchQuery.length > 0 ? (
+              <TableBody data={searchResults} />
+            ) : (
+              <TableBody data={data} />
+            )}
           </table>
         </div>
       </div>
@@ -346,6 +314,66 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
           </div>
         </div>
       )}
-    </>
+    </div>
+  );
+}
+
+function TableBody({ data }) {
+  const navigate = useNavigate();
+  const developmentViewClickHandler = (id) => {
+    navigate(`/development/${id}`);
+  };
+
+  const formatNumber = (number) => {
+    return new Intl.NumberFormat().format(number);
+  };
+
+  return (
+    <tbody>
+      {data.map((development) => (
+        <tr key={development._id}>
+          <td
+            className="dev-name"
+            onClick={() => developmentViewClickHandler(development._id)}
+          >
+            {<span>{development.name}</span>}
+          </td>
+          <td>{development.area}</td>
+          <td>{development.cardinalLocation}</td>
+          <td>{development.zone}</td>
+          <td>{development.developer}</td>
+          <td>{development.completionYear}</td>
+          <td>{development.parking ? "Yes" : "No"}</td>
+          <td>
+            {development.availability?.zeroBed?.available
+              ? "£" + formatNumber(development.availability.zeroBed.priceFrom)
+              : "No"}
+          </td>
+          <td>
+            {development.availability?.oneBed?.available
+              ? "£" + formatNumber(development.availability.oneBed.priceFrom)
+              : "No"}
+          </td>
+          <td>
+            {development.availability?.twoBed?.available
+              ? "£" + formatNumber(development.availability.twoBed.priceFrom)
+              : "No"}
+          </td>
+          <td>
+            {development.availability?.threeBed?.available
+              ? "£" + formatNumber(development.availability.threeBed.priceFrom)
+              : "No"}
+          </td>
+          <td>
+            {development.availability?.fourPlusBed?.available
+              ? "£" +
+                formatNumber(development.availability.fourPlusBed.priceFrom)
+              : "No"}
+          </td>
+          <td>{development.fee + "%"}</td>
+          <td>{development.contactEmail}</td>
+        </tr>
+      ))}
+    </tbody>
   );
 }
