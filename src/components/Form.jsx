@@ -572,6 +572,7 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
           </fieldset>
 
           <div>
+            <h3>Brochures</h3>
             <label>
               New Brochure:
               <input
@@ -589,8 +590,34 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
               </button>
             </label>
           </div>
+          {formData.brochures.length > 0 && (
+            <div>
+              {formData.brochures.map((brochure, index) => (
+                <div
+                  key={index}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <a
+                    href={brochure}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles["link-text"]}
+                  >
+                    {brochure}
+                  </a>
+                  <span
+                    className={styles["remove-icon"]}
+                    onClick={() => handleRemoveBrochure(index)}
+                  >
+                    X
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div>
+            <h3>Price Lists</h3>
             <label>
               New Price List:
               <input
@@ -609,52 +636,27 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
             </button>
           </div>
 
-          {formData.brochures.length > 0 && (
-            <div>
-              <h3>Brochures</h3>
-              {formData.brochures.map((brochure, index) => (
-                <div key={index}>
-                  <input
-                    className={styles["form-input"]}
-                    type="text"
-                    value={brochure}
-                    onChange={(e) =>
-                      handleBrochureChange(index, e.target.value)
-                    }
-                  />
-                  <button
-                    className={styles["form-button"]}
-                    type="button"
-                    onClick={() => handleRemoveBrochure(index)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-
           {formData.priceLists.length > 0 && (
             <div>
-              <h3>Price Lists</h3>
               {formData.priceLists.map((priceList, index) => (
-                <div key={index}>
-                  <input
-                    className={styles["form-input"]}
-                    type="text"
-                    value={priceList.url || ""}
-                    onChange={(e) =>
-                      handlePriceListChange(index, e.target.value)
-                    }
-                  />
-
-                  <button
-                    type="button"
-                    onClick={() => handleRemovePriceList(index)}
-                    className={styles["form-button"]}
+                <div
+                  key={index}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <a
+                    href={priceList.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles["link-text"]}
                   >
-                    Remove
-                  </button>
+                    {priceList.url}
+                  </a>
+                  <span
+                    className={styles["remove-icon"]}
+                    onClick={() => handleRemovePriceList(index)}
+                  >
+                    X
+                  </span>
                 </div>
               ))}
             </div>
@@ -767,22 +769,17 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
                 <div>
                   <h3>Amenities</h3>
                   {formData.amenities.map((amenity, index) => (
-                    <div key={index}>
-                      <input
-                        className={styles["form-input"]}
-                        type="text"
-                        value={amenity}
-                        onChange={(e) =>
-                          handleAmenityChange(index, e.target.value)
-                        }
-                      />
-                      <button
-                        type="button"
+                    <div
+                      key={index}
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <div>{amenity}</div>
+                      <span
+                        className={styles["remove-icon"]}
                         onClick={() => handleRemoveAmenity(index)}
-                        className={styles["form-button"]}
                       >
-                        Remove
-                      </button>
+                        X
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -792,22 +789,17 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
                 <div>
                   <h3>Features</h3>
                   {formData.features.map((feature, index) => (
-                    <div key={index}>
-                      <input
-                        className={styles["form-input"]}
-                        type="text"
-                        value={feature}
-                        onChange={(e) =>
-                          handleFeatureChange(index, e.target.value)
-                        }
-                      />
-                      <button
-                        type="button"
+                    <div
+                      key={index}
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <div>{feature}</div>
+                      <span
+                        className={styles["remove-icon"]}
                         onClick={() => handleRemoveFeature(index)}
-                        className={styles["form-button"]}
                       >
-                        Remove
-                      </button>
+                        X
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -817,22 +809,24 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
                 <div>
                   <h3>Images</h3>
                   {formData.images.map((image, index) => (
-                    <div key={index}>
-                      <input
-                        className={styles["form-input"]}
-                        type="text"
-                        value={image}
-                        onChange={(e) =>
-                          handleImageChange(index, e.target.value)
-                        }
-                      />
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveImage(index)}
-                        className={styles["form-button"]}
+                    <div
+                      key={index}
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <a
+                        href={image}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles["link-text"]}
                       >
-                        Remove
-                      </button>
+                        {image}
+                      </a>
+                      <span
+                        className={styles["remove-icon"]}
+                        onClick={() => handleRemoveImage(index)}
+                      >
+                        X
+                      </span>
                     </div>
                   ))}
                 </div>

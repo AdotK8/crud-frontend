@@ -149,3 +149,11 @@ h3 {
 .remove-icon:hover {
   background-color: darkred;
 }
+
+.link-text {
+  max-width: 700px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: inline-block;
+  white-space: normal;
+}
