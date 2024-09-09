@@ -13,7 +13,7 @@ import yaseIcon from "../assets/yase-map-icon.png";
 
 const containerStyle = {
   width: "100%",
-  height: "95vh",
+  height: "93vh",
 };
 
 // Central London long/lat

@@ -1,6 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from "react";
-import DevelopmentsTable from "./Table";
 import {
   BrowserRouter as Router,
   Route,
@@ -8,6 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { fetchAllDevelopments } from "../utils/api";
+import DevelopmentsTable from "./Table";
 import DevelopmentDetail from "./Details";
 import Navbar from "./Navbar";
 import Matching from "./Matching";
@@ -24,6 +24,7 @@ function AppContent() {
     fetchData();
   }, [location.pathname]);
 
+  //initial data fetch
   const fetchData = async () => {
     setLoading(true);
     try {

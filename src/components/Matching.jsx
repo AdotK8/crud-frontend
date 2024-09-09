@@ -139,7 +139,6 @@ export default function Matching({ data }) {
         <div className={styles.filterSection}>
           <h2>Requirements</h2>
           <form onSubmit={handleSubmit}>
-            {/* Parking Filter */}
             <div className={styles.filterGroup}>
               <label htmlFor="parking-filter">Parking</label>
               <select
@@ -153,7 +152,6 @@ export default function Matching({ data }) {
               </select>
             </div>
 
-            {/* Zone Filter */}
             <div className={styles.filterGroup}>
               <label htmlFor="zone-filter">Zone</label>
               <select
@@ -171,7 +169,6 @@ export default function Matching({ data }) {
               </select>
             </div>
 
-            {/* Cardinal Location Filter */}
             <div className={styles.filterGroup}>
               <label htmlFor="cardinal-filter">Location</label>
               <select
@@ -189,7 +186,6 @@ export default function Matching({ data }) {
               </select>
             </div>
 
-            {/* Bedrooms Filter */}
             <div className={styles.filterGroup}>
               <label htmlFor="beds-filter">Bedrooms</label>
               <select
@@ -207,7 +203,6 @@ export default function Matching({ data }) {
               </select>
             </div>
 
-            {/* Completion Year Filter */}
             <div className={styles.filterGroup}>
               <label htmlFor="completion-filter">Completion Year</label>
               <select
@@ -225,7 +220,6 @@ export default function Matching({ data }) {
               </select>
             </div>
 
-            {/* Max Price Filter */}
             <div className={styles.filterGroup}>
               <label htmlFor="price-filter">Max Price</label>
               <input

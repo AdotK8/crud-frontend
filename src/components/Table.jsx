@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "../styles/table.module.scss";
+import magnifyIcon from "../assets/magnify.svg";
 import DevelopmentForm from "./Form";
 import { createDevelopment, fetchAllDevelopments } from "../utils/api";
-import { useNavigate } from "react-router-dom";
-import magnifyIcon from "../assets/magnify.svg";
 
 export default function DevelopmentsTable({ data, setData, setLoading }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,6 +35,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
     setErrorMessage("");
   };
 
+  //filter function
   const refreshData = async () => {
     try {
       const result = await fetchAllDevelopments();
@@ -125,7 +126,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                 {/* TABLE HEADERS */}
                 <th>Name</th>
                 <th>Area</th>
-                {/* Cardinal Filter */}
                 <th>
                   Cardinal Location
                   <div
@@ -148,7 +148,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                     </select>
                   </div>
                 </th>
-                {/* Zone Filter */}
                 <th>
                   Zone
                   <div
@@ -198,7 +197,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                     </select>
                   </div>
                 </th>
-                {/* Parking Filter */}
                 <th>
                   Parking
                   <div
@@ -217,7 +215,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                     </select>
                   </div>
                 </th>
-                {/* Studio bed Filter */}
                 <th>
                   Studio Availability
                   <div
@@ -236,7 +233,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                     </select>
                   </div>
                 </th>
-                {/* 1 bed Filter */}
                 <th>
                   1 Bed Availability
                   <div
@@ -255,7 +251,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                     </select>
                   </div>
                 </th>
-                {/* 2 bed Filter */}
                 <th>
                   2 Bed Availability
                   <div
@@ -274,7 +269,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                     </select>
                   </div>
                 </th>
-                {/* 3 bed Filter */}
                 <th>
                   3 Bed Availability
                   <div
@@ -293,7 +287,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                     </select>
                   </div>
                 </th>
-                {/* 4 bed Filter */}
                 <th>
                   4+ Bed Availability
                   <div

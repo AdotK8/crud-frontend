@@ -127,15 +127,6 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
     }
   };
 
-  const handleAmenityChange = (index, value) => {
-    const updatedAmenities = [...formData.amenities];
-    updatedAmenities[index] = value;
-    setFormData((prevState) => ({
-      ...prevState,
-      amenities: updatedAmenities,
-    }));
-  };
-
   const handleRemoveAmenity = (index) => {
     const updatedAmenities = formData.amenities.filter((_, i) => i !== index);
     setFormData((prevState) => ({
@@ -152,15 +143,6 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
       }));
       setNewFeature("");
     }
-  };
-
-  const handleFeatureChange = (index, value) => {
-    const updatedFeatures = [...formData.features];
-    updatedFeatures[index] = value;
-    setFormData((prevState) => ({
-      ...prevState,
-      features: updatedFeatures,
-    }));
   };
 
   const handleRemoveFeature = (index) => {
@@ -181,15 +163,6 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
     }
   };
 
-  const handleImageChange = (index, value) => {
-    const updatedImages = [...formData.images];
-    updatedImages[index] = value;
-    setFormData((prevState) => ({
-      ...prevState,
-      images: updatedImages,
-    }));
-  };
-
   const handleRemoveImage = (index) => {
     const updatedImages = formData.images.filter((_, i) => i !== index);
     setFormData((prevState) => ({
@@ -206,15 +179,6 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
       }));
       setNewBrochure("");
     }
-  };
-
-  const handleBrochureChange = (index, value) => {
-    const updatedBrochures = [...formData.brochures];
-    updatedBrochures[index] = value;
-    setFormData((prevState) => ({
-      ...prevState,
-      brochures: updatedBrochures,
-    }));
   };
 
   const handleRemoveBrochure = (index) => {
@@ -236,15 +200,6 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
       }));
       setNewPriceList("");
     }
-  };
-
-  const handlePriceListChange = (index, value) => {
-    const updatedPriceLists = [...formData.priceLists];
-    updatedPriceLists[index] = { ...updatedPriceLists[index], url: value };
-    setFormData((prevState) => ({
-      ...prevState,
-      priceLists: updatedPriceLists,
-    }));
   };
 
   const handleRemovePriceList = (index) => {
