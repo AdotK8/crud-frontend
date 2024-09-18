@@ -10,8 +10,10 @@
   background-color: $bg-color;
   color: white;
 
-  &:hover {
-    background-color: darken($bg-color, 10%);
+  & {
+    &:hover {
+      background-color: darken($bg-color, 10%);
+    }
   }
 }
 
@@ -71,8 +73,10 @@ input[type="number"] {
 button {
   @include buttonBase($yase-purple);
 
-  &:not(.addButton):not(.removeButton):hover {
-    background-color: darken($yase-purple, 20%);
+  & {
+    &:not(.addButton):not(.removeButton):hover {
+      background-color: darken($yase-purple, 20%);
+    }
   }
 }
 
@@ -82,15 +86,19 @@ button {
 
 .addButton {
   @include buttonBase(#28a745);
-  border-radius: 100px;
+  & {
+    border-radius: 100px;
+  }
 }
 
 .removeButton {
   @include buttonBase(#ff4d4d);
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  & {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 .matchesList {
@@ -155,8 +163,13 @@ button {
   margin-top: 20px;
 
   > .sendButton {
-    @include buttonBase($yase-purple);
     margin-top: 10px;
+
+    @include buttonBase($yase-purple);
+
+    &:hover {
+      background-color: darken($yase-purple, 10%);
+    }
   }
 }
 

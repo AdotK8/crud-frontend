@@ -800,6 +800,7 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
 
 DevelopmentForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  handleCloseModal: PropTypes.func.isRequired,
   id: PropTypes.string,
 };
 
