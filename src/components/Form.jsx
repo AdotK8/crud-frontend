@@ -262,6 +262,8 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
       onSubmit({ ...formData, availability: updatedAvailability, coords });
     } catch (error) {
       console.error("Error fetching coordinates:", error.message);
+
+      setError(error.message);
     }
   };
 
