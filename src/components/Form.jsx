@@ -242,10 +242,6 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
       }
     }
 
-    if (formData.brochures.length === 0) {
-      errorMessage = "At least one brochure is required.";
-    }
-
     if (!EMAIL_REGEX.test(formData.contactEmail)) {
       errorMessage = "Please enter a valid email address.";
     }
