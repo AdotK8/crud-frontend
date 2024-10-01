@@ -73,7 +73,7 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
     const { name, value, type, checked } = e.target;
 
     //resets completion quarter to empty if completed is selected
-    if (value === "completed") {
+    if (value === "Completed") {
       formData.completionQuarter = "";
     }
 
@@ -415,7 +415,6 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
               >
                 <option value="">Select completion date</option>
                 <option value="Completed">Completed</option>
-                <option value="2024">2024</option>
                 <option value="2025">2025</option>
                 <option value="2026">2026</option>
                 <option value="2027">2027</option>

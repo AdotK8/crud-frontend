@@ -137,7 +137,7 @@ export default function DevelopmentDetail() {
             </div>
             <div>
               <strong>Nearest Station Distance:</strong>{" "}
-              {development.nearestStationDistance} km
+              {development.nearestStationDistance} mins walk
             </div>
             <div>
               <strong>Area:</strong> {development.area}
@@ -155,11 +155,8 @@ export default function DevelopmentDetail() {
               <strong>Contact Email:</strong> {development.contactEmail}
             </div>
             <div>
-              <strong>Completion Quarter:</strong>{" "}
-              {development.completionQuarter}
-            </div>
-            <div>
-              <strong>Completion Year:</strong> {development.completionYear}
+              <strong>Completion Year:</strong> {development.completionQuarter}{" "}
+              {development.completionYear}
             </div>
             <div>
               <strong>Email Copy (Key Features):</strong>{" "}

@@ -98,7 +98,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
     if (e.target.value.length > 0) {
       const searchString = e.target.value.toLowerCase();
       const filteredData = data.filter((dev) => {
-        return dev.name.toLowerCase().startsWith(searchString);
+        return dev.name.toLowerCase().includes(searchString);
       });
       console.log("filtered data", filteredData);
       setSearchResults(filteredData);
@@ -190,7 +190,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
                     >
                       <option value="All">All</option>
                       <option value="Completed">Completed</option>
-                      <option value="2024">2024</option>
                       <option value="2025">2025</option>
                       <option value="2026">2026</option>
                       <option value="2027">2027</option>
