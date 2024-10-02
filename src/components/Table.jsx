@@ -100,7 +100,6 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
       const filteredData = data.filter((dev) => {
         return dev.name.toLowerCase().includes(searchString);
       });
-      console.log("filtered data", filteredData);
       setSearchResults(filteredData);
     } else {
       setSearchResults([]);

@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:3000/api/developments";
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL ||
+  "http://localhost:3000/api/developments";
 
 export const sendMatchEmail = async (selection, email, name) => {
   try {

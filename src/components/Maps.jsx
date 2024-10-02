@@ -66,7 +66,7 @@ function MapPage() {
   const fetchData = async () => {
     try {
       const result = await fetchMappingInfo();
-      console.log("Fetched mapping info:", result);
+
       setDevelopments(result);
     } catch (error) {
       setError(error);
