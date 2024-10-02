@@ -1,6 +1,5 @@
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL ||
-  "http://localhost:3000/api/developments";
+  "https://yase-crud-backend-c0bc93f85f45.herokuapp.com/api/developments";
 
 export const sendMatchEmail = async (selection, email, name) => {
   try {
@@ -109,6 +108,7 @@ export const editDevelopment = async (development) => {
 
 export const deleteDevelopment = async (id) => {
   try {
+    console.log(id);
     const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: "DELETE",
       headers: {
