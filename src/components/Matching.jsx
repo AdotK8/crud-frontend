@@ -65,6 +65,7 @@ export default function Matching({ data }) {
   };
 
   const handleSubmit = (e) => {
+    console.log(filters.zone);
     e.preventDefault();
 
     const price = parseInt(filters.maxPrice, 10);
@@ -81,6 +82,15 @@ export default function Matching({ data }) {
       filters.cardinal !== "central"
     ) {
       setError("Only Central London includes Zone 1 properties");
+      return;
+    }
+
+    if (
+      filters.cardinal == "central" &&
+      filters.zone !== "All" &&
+      filters.zone !== 1
+    ) {
+      setError("Only Zone 1 includes central London properties");
       return;
     }
 
