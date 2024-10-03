@@ -80,7 +80,7 @@ export default function Matching({ data }) {
       filters.cardinal !== "All" &&
       filters.cardinal !== "central"
     ) {
-      setError("Only Central london includes Zone 1 properties");
+      setError("Only Central London includes Zone 1 properties");
       return;
     }
 

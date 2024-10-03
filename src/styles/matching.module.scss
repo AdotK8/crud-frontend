@@ -63,7 +63,11 @@
 // Media query for smaller screens
 @media (max-width: 768px) {
   .container {
-    flex-direction: column; // Stack sections vertically
+    flex-direction: column;
+  }
+
+  .error {
+    font-size: 0.7rem;
   }
 }
 
