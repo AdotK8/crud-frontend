@@ -75,6 +75,15 @@ export default function Matching({ data }) {
       return;
     }
 
+    if (
+      filters.zone == 1 &&
+      filters.cardinal !== "All" &&
+      filters.cardinal !== "central"
+    ) {
+      setError("Only Central london includes Zone 1 properties");
+      return;
+    }
+
     if (price < 100000) {
       setError("Price must be at least 100,000.");
       return;
@@ -93,7 +102,7 @@ export default function Matching({ data }) {
     );
 
     if (isAlreadySelected) {
-      setError(`"${development.name}" has already been selected`);
+      setError(`'${development.name}' has already been selected`);
     } else {
       setSelection((prevSelection) => [...prevSelection, development]);
       setError("");
@@ -236,16 +245,41 @@ export default function Matching({ data }) {
             </button>
           </form>
         </div>
-
-        {/* Matches Section */}
+        {/* Selection Section */}
         <div className={styles.matchesSection}>
           <h2>Matches</h2>
           {matches.length > 0 ? (
             <ul className={styles.matchesList}>
               {matches.map((match) => (
                 <li key={match._id} className={styles.matchItem}>
-                  <div className={styles.matchName}>
-                    {match.name} - ({match.area})
+                  <div className={styles.matchContent}>
+                    <div className={styles.matchName}>
+                      <strong>{match.name}</strong> - ({match.area})
+                    </div>
+                    <div className={styles.availability}>
+                      {match.availability &&
+                        Object.keys(match.availability).map((bedType) => {
+                          const { available, priceFrom } =
+                            match.availability[bedType];
+                          if (available) {
+                            const formattedBedType = bedType
+                              .replace(/([A-Z])/g, " $1")
+                              .replace(/^./, (str) => str.toUpperCase())
+                              .trim();
+
+                            return (
+                              <p key={bedType} className={styles.bedInfo}>
+                                {bedType === "zeroBed"
+                                  ? "Studios"
+                                  : formattedBedType}
+                                {"'s "}
+                                from £{formatNumber(priceFrom)}
+                              </p>
+                            );
+                          }
+                          return null;
+                        })}
+                    </div>
                   </div>
                   <button
                     onClick={() => addToSelection(match)}
@@ -260,7 +294,6 @@ export default function Matching({ data }) {
             <p>No matches found</p>
           )}
         </div>
-
         {/* Selection Section */}
         <div className={styles.selectionSection}>
           <h2>Selection</h2>
@@ -270,38 +303,44 @@ export default function Matching({ data }) {
                 <div key={development._id} className={styles.card}>
                   <div className={styles.cardContent}>
                     <h3 className={styles.cardTitle}>{development.name}</h3>
-                    {development.availability &&
-                      Object.keys(development.availability).map((bedType) => {
-                        const { available, priceFrom } =
-                          development.availability[bedType];
-                        if (available) {
-                          const formattedBedType = bedType
-                            .replace(/([A-Z])/g, " $1")
-                            .replace(/^./, (str) => str.toUpperCase())
-                            .trim();
 
-                          return (
-                            <p key={bedType} className={styles.bedInfo}>
-                              {bedType === "zeroBed"
-                                ? "Studios"
-                                : formattedBedType}
-                              {"'s "}
-                              from £{formatNumber(priceFrom)}
-                            </p>
-                          );
-                        }
-                        return null;
-                      })}
+                    {development.brochures &&
+                    development.brochures.length > 0 ? (
+                      <p
+                        className={`${styles.selectionInfo} ${
+                          development.brochures.length && styles.green
+                        }`}
+                      >
+                        Brochure availabale{" "}
+                      </p>
+                    ) : (
+                      <p
+                        className={`${styles.selectionInfo} ${
+                          !development.brochures.length && styles.red
+                        }`}
+                      >
+                        No brochures available
+                      </p>
+                    )}
+
                     {development.priceLists &&
                     development.priceLists.length > 0 ? (
-                      <p className={styles.priceInfo}>
+                      <p
+                        className={`${styles.selectionInfo} ${
+                          development.priceLists.length && styles.green
+                        }`}
+                      >
                         Price list available from{" "}
                         {new Date(
                           development.priceListsLastUpdated
                         ).toLocaleDateString()}
                       </p>
                     ) : (
-                      <p className={styles.priceInfo}>
+                      <p
+                        className={`${styles.selectionInfo} ${
+                          !development.priceLists.length && styles.red
+                        }`}
+                      >
                         No price list available
                       </p>
                     )}

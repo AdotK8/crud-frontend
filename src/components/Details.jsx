@@ -138,10 +138,8 @@ export default function DevelopmentDetail() {
 
             <div>
               <strong>Nearest Station:</strong> {development.nearestStation}
-            </div>
-            <div>
-              <strong>Nearest Station Distance:</strong>{" "}
-              {development.nearestStationDistance} mins walk
+              {" ("}
+              {development.nearestStationDistance} mins walk{")"}
             </div>
             <div>
               <strong>Area:</strong> {development.area}
@@ -150,7 +148,9 @@ export default function DevelopmentDetail() {
               <strong>Developer:</strong> {development.developer}
             </div>
             <div>
-              <strong>Cardinal Location:</strong> {development.cardinalLocation}
+              <strong>Cardinal Location:</strong>{" "}
+              {development.cardinalLocation.charAt(0).toUpperCase() +
+                development.cardinalLocation.slice(1)}
             </div>
             <div>
               <strong>Fee:</strong> {development.fee}%
@@ -163,8 +163,7 @@ export default function DevelopmentDetail() {
               {development.completionYear}
             </div>
             <div>
-              <strong>Email Copy (Key Features):</strong>{" "}
-              {development.emailCopy}
+              <strong>Key Features:</strong> {development.emailCopy}
             </div>
             <div>
               <strong>Created At:</strong>{" "}

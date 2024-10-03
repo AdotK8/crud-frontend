@@ -476,7 +476,7 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
 
           <div>
             <label>
-              Email Copy (Key Features):
+              Email Description (Key Features):
               <input
                 className={styles["form-input"]}
                 type="text"

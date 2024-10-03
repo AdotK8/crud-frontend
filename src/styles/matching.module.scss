@@ -10,10 +10,8 @@
   background-color: $bg-color;
   color: white;
 
-  & {
-    &:hover {
-      background-color: darken($bg-color, 10%);
-    }
+  &:hover {
+    background-color: darken($bg-color, 10%);
   }
 }
 
@@ -62,6 +60,13 @@
   }
 }
 
+// Media query for smaller screens
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; // Stack sections vertically
+  }
+}
+
 select,
 input[type="number"] {
   width: 100%;
@@ -73,10 +78,8 @@ input[type="number"] {
 button {
   @include buttonBase($yase-purple);
 
-  & {
-    &:not(.addButton):not(.removeButton):hover {
-      background-color: darken($yase-purple, 20%);
-    }
+  &:not(.addButton):not(.removeButton):hover {
+    background-color: darken($yase-purple, 20%);
   }
 }
 
@@ -86,19 +89,15 @@ button {
 
 .addButton {
   @include buttonBase(#28a745);
-  & {
-    border-radius: 100px;
-  }
+  border-radius: 100px;
 }
 
 .removeButton {
   @include buttonBase(#ff4d4d);
-  & {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .matchesList {
@@ -108,10 +107,27 @@ button {
   > .matchItem {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 10px;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+  }
+
+  .matchContent {
+    flex: 1;
+  }
+
+  .matchName {
+    font-weight: bold;
+  }
+
+  .availability {
+    margin-top: 5px;
+  }
+
+  .bedInfo {
+    font-size: 0.875rem;
+    margin: 2px 0;
   }
 }
 
@@ -147,14 +163,22 @@ button {
     }
 
     > .bedInfo,
-    .priceInfo {
-      margin: 5px 0;
+    .selectionInfo {
+      margin: 1px 0;
       font-size: 1rem;
     }
 
-    > .priceInfo {
+    > .selectionInfo {
       color: #666;
       font-size: 0.875rem;
+    }
+
+    .red {
+      color: red;
+    }
+
+    .green {
+      color: green;
     }
   }
 }
