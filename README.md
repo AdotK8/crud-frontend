@@ -35,6 +35,7 @@
 <h2>Matching Tool</h2>
 
 ![Alt text](https://raw.githubusercontent.com/AdotK8/crud-frontend/refs/heads/main/readme-matching.png)
+![Alt text](https://raw.githubusercontent.com/AdotK8/crud-frontend/refs/heads/main/readme-email.png)
 
 <ul>
   <li>
