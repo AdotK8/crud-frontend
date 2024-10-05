@@ -26,11 +26,15 @@
   </li>
 
   <li>
+  ![Alt text](https://raw.githubusercontent.com/AdotK8/crud-frontend/refs/heads/main/readme-details.png)
     <strong>Details Page</strong>: When a development is clicked, a details page opens showcasing all relevant information, including price lists and brochures. Users can amend or delete details from this page. Price lists and availability are intended to be updated as needed.
   </li>
 </ul>
 
 <h2>Matching Tool</h2>
+
+![Alt text](https://raw.githubusercontent.com/AdotK8/crud-frontend/refs/heads/main/readme-matching.png)
+
 <ul>
   <li>
     <strong>Requirements Section</strong>: The leftmost section of the page prompts users to enter information about their client's property search, such as maximum price (required), parking availability, zone, completion date, etc.
@@ -48,6 +52,9 @@
 </ul>
 
 <h2>Maps Page</h2>
+
+![Alt text](https://raw.githubusercontent.com/AdotK8/crud-frontend/refs/heads/main/readme-maps.png)
+
 <ul>
   <li>
     This page utilizes the Google Maps API to display all properties on a map of London, employing icon clustering for more convenient viewing. When a property is clicked, an info window appears, showing the name of each development. Clicking on the name will navigate to the details page mentioned earlier. Additionally, Street View can be toggled from the top left corner of the map.
