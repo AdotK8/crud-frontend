@@ -6,6 +6,8 @@
 <p>From a technological standpoint, this frontend web app utilizes a RESTful API backend built with the MERN stack.</p>
 
 <h2>Database Section</h2>>
+
+<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/Fszh2H1gSBZ2jTbRTj" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/Fszh2H1gSBZ2jTbRTj">via GIPHY</a></p>
 <ul>
   <li>
     <strong>Database of New Build Developments</strong>: Utilizes MongoDB to store data. Users can scroll down to view over 100 developments and access key information.
