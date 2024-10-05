@@ -5,9 +5,11 @@
 
 <p>From a technological standpoint, this frontend web app utilizes a RESTful API backend built with the MERN stack.</p>
 
+## [Live Preview](https://yase-databae.netlify.app/)
+
 <h2>Database Section</h2>>
 
-![Database Section GIF](https://media.giphy.com/media/Fszh2H1gSBZ2jTbRTj/giphy.gif)
+![Alt text](https://raw.githubusercontent.com/AdotK8/crud-frontend/refs/heads/main/readme-database.png)
 
 <ul>
   <li>
@@ -22,6 +24,7 @@
   <li>
     <strong>Create New Development</strong>: A "Create New Development" button at the bottom opens a form where users can quickly add new developments.
   </li>
+
   <li>
     <strong>Details Page</strong>: When a development is clicked, a details page opens showcasing all relevant information, including price lists and brochures. Users can amend or delete details from this page. Price lists and availability are intended to be updated as needed.
   </li>
