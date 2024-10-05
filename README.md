@@ -10,6 +10,7 @@
 <h2>Database Section</h2>>
 
 ![Alt text](https://raw.githubusercontent.com/AdotK8/crud-frontend/refs/heads/main/readme-database.png)
+![Alt text](https://raw.githubusercontent.com/AdotK8/crud-frontend/refs/heads/main/readme-details.png)
 
 <ul>
   <li>
@@ -26,8 +27,8 @@
   </li>
 
   <li>
-  ![Alt text](https://raw.githubusercontent.com/AdotK8/crud-frontend/refs/heads/main/readme-details.png)
     <strong>Details Page</strong>: When a development is clicked, a details page opens showcasing all relevant information, including price lists and brochures. Users can amend or delete details from this page. Price lists and availability are intended to be updated as needed.
+
   </li>
 </ul>
 
