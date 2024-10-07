@@ -144,11 +144,6 @@
       max-width: 90%;
       position: relative;
 
-      .errorMessage {
-        color: red;
-        margin-top: 10px;
-      }
-
       .close {
         position: absolute;
         top: 10px;
@@ -162,38 +157,58 @@
         }
       }
 
-      .confirmButton,
-      .cancelButton {
-        padding: 10px 15px;
-        margin-top: 15px;
-        border: none;
+      .errorMessage {
+        color: red;
+        margin-top: 10px;
+      }
+
+      .passwordInput {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
         border-radius: 5px;
-        cursor: pointer;
         font-size: 1rem;
-        width: 100px;
-        transition: background-color 0.3s ease;
+        margin-top: 10px;
 
         &:focus {
           outline: none;
         }
       }
 
-      .confirmButton {
-        background-color: #4caf50;
-        color: #fff;
-        margin-right: 10px;
+      .actionButtons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
 
-        &:hover {
-          background-color: #45a049;
+        button {
+          padding: 10px 15px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 1rem;
+          width: 48%;
+
+          &:focus {
+            outline: none;
+          }
         }
-      }
 
-      .cancelButton {
-        background-color: #f44336;
-        color: #fff;
+        .confirmButton {
+          background-color: #4caf50;
+          color: #fff;
 
-        &:hover {
-          background-color: #e53935;
+          &:hover {
+            background-color: #45a049;
+          }
+        }
+
+        .cancelButton {
+          background-color: #f44336;
+          color: #fff;
+
+          &:hover {
+            background-color: #e53935;
+          }
         }
       }
     }

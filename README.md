@@ -7,7 +7,7 @@
 
 ## [Live Preview](https://yase-databae.netlify.app/)
 
-<h2>Database Section</h2>>
+<h2>Database Section</h2>
 
 ![Alt text](https://raw.githubusercontent.com/AdotK8/crud-frontend/refs/heads/main/readme-database.png)
 ![Alt text](https://raw.githubusercontent.com/AdotK8/crud-frontend/refs/heads/main/readme-details.png)

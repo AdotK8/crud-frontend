@@ -46,7 +46,9 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
   const [newBrochure, setNewBrochure] = useState("");
   const [newPriceList, setNewPriceList] = useState("");
   const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
 
+  const correctPassword = process.env.REACT_APP_PW;
   const bedtypeObject = {
     zeroBed: "Studio",
     oneBed: "1 Bed",
@@ -214,6 +216,11 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
     e.preventDefault();
     let errorMessage = "";
     console.log(e);
+
+    if (password !== correctPassword) {
+      setError("Incorrect password. Please try again.");
+      return;
+    }
 
     const updatedAvailability = { ...formData.availability };
     if (!formData.availability.zeroBed.available) {
@@ -785,6 +792,19 @@ function DevelopmentForm({ onSubmit, handleCloseModal, id = null }) {
               )}
             </>
           )}
+
+          <div>
+            <label>
+              Password:
+              <input
+                className={styles["form-input"]}
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
+          </div>
 
           <button type="submit" className={styles["form-button"]}>
             Submit

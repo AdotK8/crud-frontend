@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => {
   return {
     define: {
       "process.env.MAP_KEY": JSON.stringify(env.MAP_KEY),
+      "process.env.REACT_APP_PW": JSON.stringify(env.REACT_APP_PW),
     },
     plugins: [react()],
   };

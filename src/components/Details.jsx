@@ -16,7 +16,10 @@ export default function DevelopmentDetail() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const correctPassword = process.env.REACT_APP_PW;
 
   useEffect(() => {
     const getDevelopment = async () => {
@@ -51,6 +54,11 @@ export default function DevelopmentDetail() {
   };
 
   const handleConfirmDelete = async () => {
+    if (password !== correctPassword) {
+      setErrorMessage("Incorrect password. Please try again.");
+      return;
+    }
+
     try {
       await deleteDevelopment(id);
       setIsModalOpen(false);
@@ -361,19 +369,34 @@ export default function DevelopmentDetail() {
               <span className={styles.close} onClick={handleCloseDeleteModal}>
                 &times;
               </span>
-              <div>Are you sure you want to delete?</div>
-              <button
-                className={styles.confirmButton}
-                onClick={handleConfirmDelete}
-              >
-                YES
-              </button>
-              <button
-                className={styles.cancelButton}
-                onClick={handleCloseDeleteModal}
-              >
-                NO
-              </button>
+              <div>Please enter the password to delete: </div>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={styles.passwordInput}
+                placeholder="Enter password"
+              />
+
+              <div className={styles.actionButtons}>
+                {" "}
+                <button
+                  className={styles.confirmButton}
+                  onClick={handleConfirmDelete}
+                >
+                  YES
+                </button>
+                <button
+                  className={styles.cancelButton}
+                  onClick={handleCloseDeleteModal}
+                >
+                  NO
+                </button>
+              </div>
+
+              {errorMessage && (
+                <div className={styles.errorMessage}>Error: {errorMessage}</div>
+              )}
             </div>
           </div>
         )}
