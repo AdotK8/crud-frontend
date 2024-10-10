@@ -3,7 +3,6 @@
 @mixin buttonBase($bg-color) {
   padding: 10px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s;
@@ -12,6 +11,10 @@
 
   &:hover {
     background-color: darken($bg-color, 10%);
+  }
+
+  & {
+    border-radius: 5px;
   }
 }
 
@@ -60,7 +63,6 @@
   }
 }
 
-// Media query for smaller screens
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -70,6 +72,7 @@
     font-size: 1rem;
   }
 }
+
 @media (min-width: 768px) {
   .error {
     font-size: 1.5rem;
@@ -87,26 +90,42 @@ input[type="number"] {
 button {
   @include buttonBase($yase-purple);
 
-  &:not(.addButton):not(.removeButton):hover {
-    background-color: darken($yase-purple, 20%);
+  &:not(.addButton):not(.removeButton) {
+    &:hover {
+      background-color: darken($yase-purple, 20%);
+    }
   }
-}
 
-.submitButton {
-  @include buttonBase($yase-purple);
+  & {
+    border-radius: 100px; // Move this inside the `&` to prevent the warning
+  }
 }
 
 .addButton {
   @include buttonBase(#28a745);
-  border-radius: 100px;
+
+  &:hover {
+    background-color: darken(#28a745, 10%);
+  }
+
+  & {
+    border-radius: 100px;
+  }
 }
 
 .removeButton {
   @include buttonBase(#ff4d4d);
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+
+  &:hover {
+    background-color: darken(#ff4d4d, 10%);
+  }
+
+  & {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 .matchesList {
@@ -124,19 +143,31 @@ button {
 
   .matchContent {
     flex: 1;
-  }
 
-  .matchName {
-    font-weight: bold;
-  }
+    .matchName {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: $yase-brown;
+    }
 
-  .availability {
-    margin-top: 5px;
-  }
+    .completion {
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
 
-  .bedInfo {
-    font-size: 0.875rem;
-    margin: 2px 0;
+    .availability {
+      margin-top: 5px;
+
+      .bedInfo {
+        font-size: 0.875rem;
+        margin: 2px 0;
+      }
+    }
+
+    .availabilityDate {
+      font-size: 0.75rem;
+      color: #999;
+    }
   }
 }
 
@@ -161,23 +192,23 @@ button {
   box-sizing: border-box;
   transition: box-shadow 0.3s ease;
 
-  > .cardContent {
+  .cardContent {
     flex: 1;
     display: flex;
     flex-direction: column;
     padding-right: 40px;
 
-    > .cardTitle {
+    .cardTitle {
       font-size: 1.25rem;
     }
 
-    > .bedInfo,
+    .bedInfo,
     .selectionInfo {
       margin: 1px 0;
       font-size: 1rem;
     }
 
-    > .selectionInfo {
+    .selectionInfo {
       color: #666;
       font-size: 0.875rem;
     }
@@ -195,7 +226,7 @@ button {
 .emailSection {
   margin-top: 20px;
 
-  > .sendButton {
+  .sendButton {
     margin-top: 10px;
 
     @include buttonBase($yase-purple);
@@ -207,7 +238,6 @@ button {
 }
 
 .error {
-  // font-size: 1.5rem;
   color: red;
   text-align: center;
   width: 100%;

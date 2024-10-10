@@ -255,7 +255,7 @@ export default function Matching({ data }) {
             </button>
           </form>
         </div>
-        {/* Selection Section */}
+        {/* Matches Section */}
         <div className={styles.matchesSection}>
           <h2>Matches</h2>
           {matches.length > 0 ? (
@@ -266,6 +266,9 @@ export default function Matching({ data }) {
                     <div className={styles.matchName}>
                       <strong>{match.name}</strong> - ({match.area})
                     </div>
+                    <em className={styles.completion}>
+                      {match.completionQuarter} {match.completionYear}
+                    </em>
                     <div className={styles.availability}>
                       {match.availability &&
                         Object.keys(match.availability).map((bedType) => {
@@ -279,6 +282,7 @@ export default function Matching({ data }) {
 
                             return (
                               <p key={bedType} className={styles.bedInfo}>
+                                {"- "}
                                 {bedType === "zeroBed"
                                   ? "Studios"
                                   : formattedBedType}
@@ -290,6 +294,12 @@ export default function Matching({ data }) {
                           return null;
                         })}
                     </div>
+                    <em className={styles.availabilityDate}>
+                      Prices accurate as of:{" "}
+                      {new Date(
+                        match.availability.lastUpdated
+                      ).toLocaleDateString()}
+                    </em>
                   </div>
                   <button
                     onClick={() => addToSelection(match)}
