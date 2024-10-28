@@ -89,6 +89,8 @@ export default function DevelopmentDetail() {
     const { _id, ...dataToSend } = formData;
 
     try {
+      console.log(_id);
+      console.log(dataToSend);
       await editDevelopment({ _id, ...dataToSend });
       refreshData();
       setIsModalOpen(false);

@@ -75,6 +75,7 @@ export default function DevelopmentsTable({ data, setData, setLoading }) {
   };
 
   const handleFormSubmit = async (formData) => {
+    console.log(formData);
     try {
       await createDevelopment(formData);
       refreshData();
