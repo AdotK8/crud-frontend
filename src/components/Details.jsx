@@ -64,10 +64,10 @@ export default function DevelopmentDetail() {
       setIsModalOpen(false);
       setErrorMessage("");
 
-      // Wait for the modal to close before navigating
+      // Wait for modal to close before navigating
       setTimeout(() => {
         navigate(`/`);
-      }, 1000); // Adjust the delay as needed
+      }, 1000);
     } catch (error) {
       console.error("Error deleting development:", error);
       setErrorMessage("Error deleting development: " + error.message);

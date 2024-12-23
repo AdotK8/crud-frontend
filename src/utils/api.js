@@ -1,9 +1,13 @@
-const API_BASE_URL =
-  "https://yase-crud-backend-c0bc93f85f45.herokuapp.com/api/developments";
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://yase-crud-backend-c0bc93f85f45.herokuapp.com"
+    : "http://localhost:5500";
+
+const endpoint = `${BASE_URL}/api/developments`;
 
 export const sendMatchEmail = async (selection, email, name) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/send-match-email`, {
+    const response = await fetch(`${endpoint}/send-match-email`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +33,7 @@ export const sendMatchEmail = async (selection, email, name) => {
 
 export const fetchAllDevelopments = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/get`);
+    const response = await fetch(`${endpoint}/get`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -42,7 +46,7 @@ export const fetchAllDevelopments = async () => {
 
 export const fetchMappingInfo = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/mapping/get`);
+    const response = await fetch(`${endpoint}/mapping/get`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -55,7 +59,7 @@ export const fetchMappingInfo = async () => {
 
 export const fetchOneDevelopment = async (id) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/get/${id}`);
+    const response = await fetch(`${endpoint}/get/${id}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -68,7 +72,7 @@ export const fetchOneDevelopment = async (id) => {
 
 export const createDevelopment = async (development) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/add`, {
+    const response = await fetch(`${endpoint}/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +92,7 @@ export const createDevelopment = async (development) => {
 
 export const editDevelopment = async (development) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/mod`, {
+    const response = await fetch(`${endpoint}/mod`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +113,7 @@ export const editDevelopment = async (development) => {
 export const deleteDevelopment = async (id) => {
   try {
     console.log(id);
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
+    const response = await fetch(`${endpoint}/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -131,7 +135,7 @@ export const deleteDevelopment = async (id) => {
 
 export const fetchCoordinates = async (postcode) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/coords`, {
+    const response = await fetch(`${endpoint}/coords`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
